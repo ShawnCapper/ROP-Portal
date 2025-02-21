@@ -4,10 +4,19 @@
     <meta charset="UTF-8">
     <title>Course Offerings</title>
     <link rel="stylesheet" href="style.css">
+    <meta name="color-scheme" content="light dark">
 </head>
 <body>
-<div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search by ID, title, or description...">
+<div class="header-container">
+    <div class="theme-switch">
+        <button id="themeToggle" aria-label="Toggle dark mode">
+            <span class="theme-icon">🌓</span>
+        </button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search course by ID, title, or description...">
+    </div>
 </div>
 
 <div class="filters">
@@ -35,10 +44,45 @@
             Hide expired postings
         </label>
     </div>
+    <div class="filter-group">
+        <label>
+            <input type="checkbox" id="shortlistedOnly">
+            Show shortlisted only
+        </label>
+    </div>
+</div>
+
+<div class="controls-container">
+    <div class="expand-control">
+        <button id="expandAllButton">Expand All</button>
+        <button id="shortlistCountButton" class="shortlist-count" aria-label="View shortlisted courses">
+            Shortlisted: <span id="shortlistCount">0</span>
+        </button>
+    </div>
+    <div class="course-count">
+        Showing <span id="courseCount">0</span> courses
+    </div>
 </div>
 
 <div id="courseList"></div>
 
-<script src="script.js" ></script>
+<template id="courseCardTemplate">
+    <div class="course-card">
+        <div class="course-header">
+            <div class="course-title-row">
+                <div class="course-title"></div>
+                <button class="shortlist-button" aria-label="Shortlist this course">
+                    <span class="shortlist-icon">☆</span>
+                </button>
+            </div>
+            <div class="course-dates"></div>
+            <div class="course-terms"></div>
+            <div class="course-delivery"></div>
+        </div>
+        <div class="course-details"></div>
+    </div>
+</template>
+
+<script src="script.js"></script>
 </body>
 </html>

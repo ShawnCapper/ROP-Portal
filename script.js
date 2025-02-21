@@ -1,60 +1,149 @@
+// Theme handling
+document.addEventListener('DOMContentLoaded', () => {
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    } else {
+        // Check system preference
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.body.classList.add('dark-mode');
+        }
+    }
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (!localStorage.getItem('theme')) {  // Only if no manual preference is saved
+            document.body.classList.toggle('dark-mode', e.matches);
+        }
+    });
+
+    // Theme toggle button handler
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+});
+
+// Shortlist management
+let shortlistedCourses = new Set(JSON.parse(localStorage.getItem('shortlistedCourses') || '[]'));
+
+function updateShortlistCount() {
+    const count = shortlistedCourses.size;
+    document.getElementById('shortlistCount').textContent = count;
+}
+
+function toggleShortlist(courseId, button) {
+    if (shortlistedCourses.has(courseId)) {
+        shortlistedCourses.delete(courseId);
+        button.querySelector('.shortlist-icon').textContent = '☆';
+        button.closest('.course-card').classList.remove('shortlisted');
+    } else {
+        shortlistedCourses.add(courseId);
+        button.querySelector('.shortlist-icon').textContent = '★';
+        button.closest('.course-card').classList.add('shortlisted');
+    }
+
+    // Add animation class
+    button.classList.add('animate');
+    setTimeout(() => button.classList.remove('animate'), 300);
+
+    // Save to localStorage
+    localStorage.setItem('shortlistedCourses', JSON.stringify([...shortlistedCourses]));
+    updateShortlistCount();
+}
+
 // Function to create course card
 function createCourseCard(course) {
-    const card = document.createElement('div');
-    card.className = 'course-card';
+    const template = document.getElementById('courseCardTemplate');
+    const card = template.content.cloneNode(true).querySelector('.course-card');
 
-    const header = document.createElement('div');
-    header.className = 'course-header';
+    const header = card.querySelector('.course-header');
+    const title = card.querySelector('.course-title');
+    const shortlistButton = card.querySelector('.shortlist-button');
 
-    // Create the header content
-    header.innerHTML = `
-        <div class="course-title">${course['Course ID']} - ${course.Title}</div>
-        <div class="course-dates">Posted: ${course.Posted} | Expires: ${course.Expires}</div>
+    // Check expiry status
+    const expiryStatus = checkExpiryStatus(course.Expires);
+    const expiryClass = expiryStatus.isExpired ? 'expired-date' :
+        expiryStatus.isExpiringSoon ? 'expiring-soon' : '';
+
+    // Set course title and ID
+    title.innerHTML = `${course.Title} <span class="course-id">(#${course['Course ID']})</span>`;
+
+    // Add dates, terms, and delivery info
+    header.innerHTML += `
+        <div class="course-dates">Posted: ${course.Posted} | Expires: <span class="${expiryClass}">${course.Expires}</span></div>
         <div class="course-terms">Terms: ${course.Terms.join(', ')}</div>
         <div class="course-delivery">Delivery: ${course['Delivery Method']}</div>
     `;
 
-    const details = document.createElement('div');
-    details.className = 'course-details';
+    const details = card.querySelector('.course-details');
 
     // Create faculty supervisor links
-    const supervisorLinks = Object.values(course['Faculty Supervisor(s)'])
-        .map(([name, url]) => `<a href="${url}" target="_blank">${name}</a>`)
+    const supervisorLinks = Object.entries(course['Faculty Supervisor(s)'])
+        .map(([_, [name, url]]) => `<a href="${url}" target="_blank">${name}</a>`)
         .join(', ');
 
-    // Create required documents list
-    const documentsHtml = `
-            <div class="required-documents">
-                <h4>Required Documents:</h4>
-                <ul>
-                    ${course['Required Documents'].map(doc => `<li>${doc}</li>`).join('')}
-                </ul>
-            </div>
-        `;
-
     details.innerHTML = `
-            <p><strong>Department:</strong> ${course.Department}</p>
-            <p><strong>DPT Code:</strong> ${course['DPT Code']}</p>
-            <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
-            <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-            <p><strong>Description:</strong> ${course.Description}</p>
-            <p><strong>Student Roles:</strong> ${course['Student Roles']}</p>
-            <p><strong>Academic Outcomes:</strong> ${course['Academic Outcomes']}</p>
-            <p><strong>Training & Mentorship:</strong> ${course['Training & Mentorship']}</p>
-            <p><strong>Selection Criteria:</strong> ${course['Selection Criteria']}</p>
-            ${documentsHtml}
-        `;
+        <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
+        <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
+        <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
+        <p><strong>Description:</strong> ${course.Description}</p>
+        <p><strong>Student Roles:</strong> ${course['Student Roles']}</p>
+        <p><strong>Academic Outcomes:</strong> ${course['Academic Outcomes']}</p>
+        <p><strong>Training & Mentorship:</strong> ${course['Training & Mentorship']}</p>
+        <p><strong>Selection Criteria:</strong> ${course['Selection Criteria']}</p>
+    `;
 
+    // Add click handler for shortlist button
+    const shortlistBtn = card.querySelector('.shortlist-button');
+    shortlistBtn.addEventListener('click', () => {
+        toggleShortlist(course['Course ID'], shortlistBtn);
+    });
 
-    card.appendChild(header);
-    card.appendChild(details);
+    // Initialize shortlist state
+    if (shortlistedCourses.has(course['Course ID'])) {
+        card.classList.add('shortlisted');
+        card.querySelector('.shortlist-icon').textContent = '★';
+    }
 
-    // Add click event to toggle details
-    header.addEventListener('click', () => {
-        details.style.display = details.style.display === 'none' ? 'block' : 'none';
+    // Initialize the details visibility based on current expanded state
+    details.style.display = isExpanded ? 'block' : 'none';
+
+    // Add event listeners
+    header.addEventListener('click', (e) => {
+        if (!e.target.closest('.shortlist-button')) {
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+
+    shortlistButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleShortlist(course['Course ID'], shortlistButton);
     });
 
     return card;
+}
+
+// Function to check if a date is expired or expiring soon (within 3 days) in Toronto time
+function checkExpiryStatus(expiryDateStr) {
+    const expiryDate = new Date(expiryDateStr);
+    const torontoOptions = { timeZone: 'America/Toronto' };
+    const nowToronto = new Date(new Date().toLocaleString('en-US', torontoOptions));
+
+    expiryDate.setHours(0, 0, 0, 0);
+    nowToronto.setHours(0, 0, 0, 0);
+
+    const diffTime = expiryDate - nowToronto;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    return {
+        isExpired: diffDays < 0,
+        isExpiringSoon: diffDays >= 0 && diffDays <= 3
+    };
 }
 
 // Function to populate filters
@@ -71,21 +160,21 @@ function populateFilters(courses) {
 
     // Populate department filter
     const departmentFilter = document.getElementById('departmentFilter');
-    departments.forEach(dept => {
+    [...departments].sort().forEach(dept => {
         const option = new Option(dept, dept);
         departmentFilter.add(option);
     });
 
     // Populate term filter
     const termFilter = document.getElementById('termFilter');
-    terms.forEach(term => {
+    [...terms].sort().forEach(term => {
         const option = new Option(term, term);
         termFilter.add(option);
     });
 
     // Populate delivery mode filter
     const deliveryFilter = document.getElementById('deliveryFilter');
-    deliveryModes.forEach(mode => {
+    [...deliveryModes].sort().forEach(mode => {
         const option = new Option(mode, mode);
         deliveryFilter.add(option);
     });
@@ -98,6 +187,7 @@ function filterCourses(courses) {
     const selectedTerm = document.getElementById('termFilter').value;
     const selectedDelivery = document.getElementById('deliveryFilter').value;
     const hideExpired = document.getElementById('activeOnly').checked;
+    const showShortlistedOnly = document.getElementById('shortlistedOnly').checked;
 
     return courses.filter(course => {
         const matchesSearch = (
@@ -109,10 +199,11 @@ function filterCourses(courses) {
         const matchesDepartment = !selectedDepartment || course.Department === selectedDepartment;
         const matchesTerm = !selectedTerm || course.Terms.includes(selectedTerm);
         const matchesDelivery = !selectedDelivery || course['Delivery Method'] === selectedDelivery;
+        const matchesActive = !hideExpired || new Date(course.Expires) > new Date();
+        const matchesShortlist = !showShortlistedOnly || shortlistedCourses.has(course['Course ID']);
 
-        const isActive = !hideExpired || new Date(course.Expires) > new Date();
-
-        return matchesSearch && matchesDepartment && matchesTerm && matchesDelivery && isActive;
+        return matchesSearch && matchesDepartment && matchesTerm &&
+            matchesDelivery && matchesActive && matchesShortlist;
     });
 }
 
@@ -128,12 +219,16 @@ async function loadCourses() {
         // Initial display of courses
         displayCourses(courses);
 
+        // Update shortlist count
+        updateShortlistCount();
+
         // Add event listeners for filters
         document.getElementById('searchInput').addEventListener('input', () => displayCourses(courses));
         document.getElementById('departmentFilter').addEventListener('change', () => displayCourses(courses));
         document.getElementById('termFilter').addEventListener('change', () => displayCourses(courses));
         document.getElementById('deliveryFilter').addEventListener('change', () => displayCourses(courses));
         document.getElementById('activeOnly').addEventListener('change', () => displayCourses(courses));
+        document.getElementById('shortlistedOnly').addEventListener('change', () => displayCourses(courses));
     } catch (error) {
         console.error('Error loading courses:', error);
         document.getElementById('courseList').innerHTML = 'Error loading courses. Please try again later.';
@@ -148,7 +243,29 @@ function displayCourses(courses) {
     filteredCourses.forEach(course => {
         courseList.appendChild(createCourseCard(course));
     });
+
+    updateCourseCount(filteredCourses.length);
 }
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', loadCourses);
+document.getElementById('expandAllButton').addEventListener('click', toggleAllCards);
+
+// Post initialization functions
+let isExpanded = false;
+
+function toggleAllCards() {
+    const button = document.getElementById('expandAllButton');
+    const allDetails = document.querySelectorAll('.course-details');
+    isExpanded = !isExpanded;
+
+    allDetails.forEach(details => {
+        details.style.display = isExpanded ? 'block' : 'none';
+    });
+
+    button.textContent = isExpanded ? 'Collapse All' : 'Expand All';
+}
+
+function updateCourseCount(count) {
+    document.getElementById('courseCount').textContent = count;
+}
