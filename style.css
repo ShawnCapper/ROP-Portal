@@ -1,180 +1,16 @@
-/* Color Palette */
-:root {
-    /* Light Theme Colors */
-    --md-sys-light-primary: #6750A4;
-    --md-sys-light-on-primary: #FFFFFF;
-    --md-sys-light-primary-container: #E9DDFF;
-    --md-sys-light-on-primary-container: #22005D;
-    --md-sys-light-secondary: #625B71;
-    --md-sys-light-on-secondary: #FFFFFF;
-    --md-sys-light-secondary-container: #E8DEF8;
-    --md-sys-light-on-secondary-container: #1E192B;
-    --md-sys-light-tertiary: #7D5260;
-    --md-sys-light-on-tertiary: #FFFFFF;
-    --md-sys-light-tertiary-container: #FFD8E4;
-    --md-sys-light-on-tertiary-container: #31101D;
-    --md-sys-light-error: #B3261E;
-    --md-sys-light-error-container: #F9DEDC;
-    --md-sys-light-on-error: #FFFFFF;
-    --md-sys-light-on-error-container: #410E0B;
-    --md-sys-light-background: #FFFBFE;
-    --md-sys-light-on-background: #1C1B1F;
-    --md-sys-light-surface: #FFFBFE;
-    --md-sys-light-on-surface: #1C1B1F;
-    --md-sys-light-surface-variant: #E7E0EC;
-    --md-sys-light-on-surface-variant: #49454F;
-    --md-sys-light-outline: #79747E;
-    --md-sys-light-inverse-surface: #313033;
-    --md-sys-light-inverse-on-surface: #F4EFF4;
-    --md-sys-light-inverse-primary: #D0BCFF;
-    --md-sys-light-shadow: #000000;
-    --md-sys-light-surface-tint: #6750A4; /* Primary color for surface tints */
-    --md-sys-light-outline-variant: #CAC4D0;
-    --md-sys-light-scrim: #000000;
-
-    /* Dark Theme Colors */
-    --md-sys-dark-primary: #D0BCFF;
-    --md-sys-dark-on-primary: #381E72;
-    --md-sys-dark-primary-container: #4F378B;
-    --md-sys-dark-on-primary-container: #E9DDFF;
-    --md-sys-dark-secondary: #CBC4D0;
-    --md-sys-dark-on-secondary: #332D41;
-    --md-sys-dark-secondary-container: #E8DEF8; /* Using container for better visibility */
-    --md-sys-dark-on-secondary-container: #E8DEF8;
-    --md-sys-dark-tertiary: #EFB8C8;
-    --md-sys-dark-on-tertiary: #492532;
-    --md-sys-dark-tertiary-container: #633B48;
-    --md-sys-dark-on-tertiary-container: #FFD8E4;
-    --md-sys-dark-error: #F2B8B5;
-    --md-sys-dark-error-container: #8C1D18;
-    --md-sys-dark-on-error: #601410;
-    --md-sys-dark-on-error-container: #F9DEDC;
-    --md-sys-dark-background: #1C1B1F;
-    --md-sys-dark-on-background: #E6E1E5;
-    --md-sys-dark-surface: #1C1B1F;
-    --md-sys-dark-on-surface: #E6E1E5;
-    --md-sys-dark-surface-variant: #49454F;
-    --md-sys-dark-on-surface-variant: #CAC4D0;
-    --md-sys-dark-outline: #938F99;
-    --md-sys-dark-inverse-surface: #E6E1E5;
-    --md-sys-dark-inverse-on-surface: #313033;
-    --md-sys-dark-inverse-primary: #6750A4;
-    --md-sys-dark-shadow: #000000;
-    --md-sys-dark-surface-tint: #D0BCFF; /* Primary color for surface tints */
-    --md-sys-dark-outline-variant: #49454F;
-    --md-sys-dark-scrim: #000000;
-
-    /* Typography */
-    --md-display-large-font-size: 57px;
-    --md-display-large-line-height: 64px;
-    --md-display-large-font-weight: 400;
-    --md-display-large-letter-spacing: -0.25px;
-
-    --md-display-medium-font-size: 45px;
-    --md-display-medium-line-height: 52px;
-    --md-display-medium-font-weight: 400;
-    --md-display-medium-letter-spacing: 0px;
-
-    --md-display-small-font-size: 36px;
-    --md-display-small-line-height: 44px;
-    --md-display-small-font-weight: 400;
-    --md-display-small-letter-spacing: 0px;
-
-    --md-headline-large-font-size: 32px;
-    --md-headline-large-line-height: 40px;
-    --md-headline-large-font-weight: 400;
-    --md-headline-large-letter-spacing: 0px;
-
-    --md-headline-medium-font-size: 28px;
-    --md-headline-medium-line-height: 36px;
-    --md-headline-medium-font-weight: 400;
-    --md-headline-medium-letter-spacing: 0px;
-
-    --md-headline-small-font-size: 24px;
-    --md-headline-small-line-height: 32px;
-    --md-headline-small-font-weight: 400;
-    --md-headline-small-letter-spacing: 0px;
-
-    --md-title-large-font-size: 22px;
-    --md-title-large-line-height: 28px;
-    --md-title-large-font-weight: 400;
-    --md-title-large-letter-spacing: 0px;
-
-    --md-title-medium-font-size: 16px;
-    --md-title-medium-line-height: 24px;
-    --md-title-medium-font-weight: 500; /* Medium font weight for titles */
-    --md-title-medium-letter-spacing: 0.15px;
-
-    --md-title-small-font-size: 14px;
-    --md-title-small-line-height: 20px;
-    --md-title-small-font-weight: 500; /* Medium font weight for titles */
-    --md-title-small-letter-spacing: 0.1px;
-
-    --md-body-large-font-size: 16px;
-    --md-body-large-line-height: 24px;
-    --md-body-large-font-weight: 400;
-    --md-body-large-letter-spacing: 0.15px;
-
-    --md-body-medium-font-size: 14px;
-    --md-body-medium-line-height: 20px;
-    --md-body-medium-font-weight: 400;
-    --md-body-medium-letter-spacing: 0.25px;
-
-    --md-body-small-font-size: 12px;
-    --md-body-small-line-height: 16px;
-    --md-body-small-font-weight: 400;
-    --md-body-small-letter-spacing: 0.4px;
-
-    --md-label-large-font-size: 14px;
-    --md-label-large-line-height: 20px;
-    --md-label-large-font-weight: 500; /* Medium font weight for labels */
-    --md-label-large-letter-spacing: 0.1px;
-
-    --md-label-medium-font-size: 12px;
-    --md-label-medium-line-height: 16px;
-    --md-label-medium-font-weight: 500; /* Medium font weight for labels */
-    --md-label-medium-letter-spacing: 0.5px;
-
-    --md-label-small-font-size: 11px;
-    --md-label-small-line-height: 16px;
-    --md-label-small-font-weight: 500; /* Medium font weight for labels */
-    --md-label-small-letter-spacing: 0.5px;
-
-    /* Elevation Levels (Material Design 3 Shadows) */
-    --elevation-0: none;
-    --elevation-1: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 2px rgba(0, 0, 0, 0.24);
-    --elevation-2: 0px 2px 6px rgba(0, 0, 0, 0.16), 0px 2px 4px rgba(0, 0, 0, 0.24);
-    --elevation-3: 0px 3px 10px rgba(0, 0, 0, 0.2), 0px 3px 5px rgba(0, 0, 0, 0.24);
-    --elevation-4: 0px 4px 18px rgba(0, 0, 0, 0.24), 0px 4px 8px rgba(0, 0, 0, 0.28);
-    --elevation-5: 0px 5px 26px rgba(0, 0, 0, 0.28), 0px 5px 12px rgba(0, 0, 0, 0.32);
-}
-
-/* Elevation Classes */
-.elevation-0 { box-shadow: var(--elevation-0); }
-.elevation-1 { box-shadow: var(--elevation-1); }
-.elevation-2 { box-shadow: var(--elevation-2); }
-.elevation-3 { box-shadow: var(--elevation-3); }
-.elevation-4 { box-shadow: var(--elevation-4); }
-.elevation-5 { box-shadow: var(--elevation-5); }
-
-
-/* Base styles for light theme (default) */
+/* Overall Page Styling */
 body {
-    font-family: 'Roboto', sans-serif; /* Material Design Font - consider system-ui for better default */
-    background-color: var(--md-sys-light-background);
-    color: var(--md-sys-light-on-background);
-    margin: 0; /* Reset default body margin */
-    padding-top: 100px;
+    margin: 100px 20px 20px 20px;
+    font-family: -apple-system, BlinkMacSystemFont, \`Segoe UI\`, Roboto, Helvetica, Arial, sans-serif, \`Apple Color Emoji\`, \`Segoe UI Emoji\`, \`Segoe UI Symbol\`;
+    background-color: #f4f4f4;
+    color: #333;
+    transition: background-color 0.3s, color 0.3s;
+    line-height: 1.6;
 }
 
-a {
-    color: var(--md-sys-light-primary);
-    text-decoration: none; /* Remove underlines from links */
-    transition: color 0.3s; /* Added transition to link color only */
-}
-
-a:visited {
-    color: var(--md-sys-light-secondary); /* Example visited link color */
+body.dark-mode {
+    background-color: #1c1c1e; /* Dark mode background */
+    color: #fff; /* White text in dark mode */
 }
 
 .header-container {
@@ -182,623 +18,360 @@ a:visited {
     top: 0;
     left: 0;
     right: 0;
-    background: var(--md-sys-light-surface);
-    padding: 1rem;
+    background-color: #f4f4f4;
+    padding: 10px;
     z-index: 1000;
-    border-bottom: 1px solid var(--md-sys-light-outline-variant);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dark-mode .header-container {
-    background: var(--md-sys-dark-surface);
-    border-bottom-color: var(--md-sys-dark-outline-variant);
+    background-color: #1c1c1e;
 }
 
-/* Theme Switch Button */
+/* Theme Toggle */
 .theme-switch {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
+    display: flex; /* Keep button compact */
+    align-items: center;
 }
 
 #themeToggle {
-    background: none;
+    background: transparent;
     border: none;
-    font-size: 1.5rem;
     cursor: pointer;
-    padding: 8px; /* 8dp padding */
-    border-radius: 50%;
-    color: var(--md-sys-light-on-surface-variant); /* Icon color */
-    transition: background-color 0.3s, color 0.3s;
+    font-size: 1.5em; /* Larger icon */
+    padding: 0;
+    color: inherit;
+    transition: color 0.3s;
 }
 
-#themeToggle:hover {
-    background-color: rgba(var(--md-sys-light-on-surface-variant), 0.08); /* Hover overlay */
+.theme-icon {
+    margin-right: 4px;
 }
+
 
 /* Search Box */
 .search-box {
-    width: calc(100% - 60px); /* Account for theme toggle width */
-    max-width: 600px;
-    margin: 0 auto;
+    flex-grow: 1;  /* Allow search box to take available space */
+    max-width: 400px; /* Limit maximum width */
 }
 
 #searchInput {
-    width: 100%;
-    padding: 12px 16px; /* Vertical: ~1.5x8, Horizontal: 2x8 */
-    font-size: var(--md-body-medium-font-size);
-    border: 1px solid var(--md-sys-light-outline);
-    border-radius: 4px; /* Slightly rounded corners */
-    background-color: var(--md-sys-light-surface);
-    color: var(--md-sys-light-on-surface);
-    transition: border-color 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
+    width: 100%; /* Full width within the search box container */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;  /* Include padding and border in width */
     outline: none; /* Remove default focus outline */
-}
-
-#searchInput:hover {
-    border-color: var(--md-sys-light-primary); /* Hover border color */
+    transition: border-color 0.3s;
 }
 
 #searchInput:focus {
-    border-color: var(--md-sys-light-primary); /* Focused border color */
-    box-shadow: 0 0 0 2px rgba(var(--md-sys-light-primary-container), 0.3); /* Subtle focus shadow */
-    /* elevation-1 on focus - example */
-    box-shadow: var(--elevation-1), 0 0 0 2px rgba(var(--md-sys-light-primary-container), 0.3);
+    border-color: #007aff; /* Apple blue highlight on focus */
 }
 
-#searchInput::placeholder {
-    color: var(--md-sys-light-on-surface-variant);
+.dark-mode #searchInput {
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
 }
 
-/* Filters Container */
+.dark-mode #searchInput:focus {
+    border-color: #4a90e2;
+}
+
+/* Filters */
 .filters {
-    margin: 0 auto 24px auto; /* 24dp (3x8) margin bottom, auto horizontal */
-    padding: 16px 24px; /* Vertical: 2x8, Horizontal: 3x8 */
-    max-width: 600px;
-    background-color: var(--md-sys-light-surface-variant);
-    border-radius: 8px; /* 8dp rounded corners */
     display: flex;
-    flex-direction: column; /* Stack filters vertically on smaller screens */
-    gap: 16px; /* 16dp (2x8) gap between filter groups */
-    transition: background-color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
-    /* elevation-1 for filters */
-    box-shadow: var(--elevation-1);
+    flex-wrap: wrap; /* Wrap filters on smaller screens */
+    gap: 10px; /* Spacing between filter groups */
+    margin-bottom: 20px;
 }
-
-.filters:hover {
-    /* elevation-2 on hover - example */
-    box-shadow: var(--elevation-2);
-}
-
-
-@media (min-width: 600px) { /* Example breakpoint for wider screens */
-    .filters {
-        flex-direction: row; /* Arrange filters horizontally on wider screens */
-        flex-wrap: wrap; /* Allow filters to wrap */
-        justify-content: space-between; /* Distribute space between filters */
-    }
-    .filter-group {
-        flex-grow: 1; /* Allow filter groups to take available space */
-        min-width: calc(50% - 8px); /* Example min width for two columns, 8dp spacing between */
-    }
-}
-
 
 .filter-group {
-    margin-bottom: 0; /* Remove bottom margin from filter groups */
-}
-
-.filter-group label {
-    display: block; /* Label on its own line */
-    margin-bottom: 8px; /* 8dp margin bottom */
-    font-size: var(--md-label-medium-font-size);
-    color: var(--md-sys-light-on-surface-variant);
-    transition: color 0.3s; /* Added transition */
-}
-
-select {
-    width: 100%;
-    padding: 12px 16px; /* Vertical: ~1.5x8, Horizontal: 2x8 */
-    font-size: var(--md-body-medium-font-size);
-    border: 1px solid var(--md-sys-light-outline);
-    border-radius: 4px;
-    background-color: var(--md-sys-light-surface);
-    color: var(--md-sys-light-on-surface);
-    transition: border-color 0.3s, background-color 0.3s, color 0.3s, box-shadow 0.3s; /* Added box-shadow transition */
-    outline: none;
-    appearance: none; /* Remove default select arrow */
-    -webkit-appearance: none; /* For Safari */
-    -moz-appearance: none; /* For Firefox */
-    background-repeat: no-repeat;
-    background-position-x: calc(100% - 16px); /* 16dp (2x8) from right */
-    background-position-y: center;
-}
-
-select:hover {
-    border-color: var(--md-sys-light-primary); /* Hover border color */
-}
-
-select:focus {
-    border-color: var(--md-sys-light-primary);
-    box-shadow: 0 0 0 2px rgba(var(--md-sys-light-primary-container), 0.3);
-    /* elevation-1 on focus - example */
-    box-shadow: var(--elevation-1), 0 0 0 2px rgba(var(--md-sys-light-primary-container), 0.3);
-}
-
-/* Checkbox */
-.filter-group input[type="checkbox"] {
-    appearance: none; /* Remove default checkbox appearance */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 18px; /* ~2x8 */
-    height: 18px; /* ~2x8 */
-    border: 2px solid var(--md-sys-light-outline);
-    border-radius: 2px;
-    background-color: var(--md-sys-light-surface);
-    cursor: pointer;
-    position: relative;
-    vertical-align: middle; /* Align checkbox with label text */
-    margin-right: 8px; /* 8dp margin right */
-    transition: border-color 0.3s, background-color 0.3s;
-}
-
-.filter-group input[type="checkbox"]:hover {
-    border-color: var(--md-sys-light-primary); /* Hover border color */
-}
-
-.filter-group input[type="checkbox"]:focus {
-    border-color: var(--md-sys-light-primary);
-    box-shadow: 0 0 0 2px rgba(var(--md-sys-light-primary-container), 0.3);
-}
-
-
-.filter-group input[type="checkbox"]:checked {
-    background-color: var(--md-sys-light-primary);
-    border-color: var(--md-sys-light-primary);
-}
-
-.filter-group input[type="checkbox"]:checked::before {
-    content: '';
-    position: absolute;
-    top: 3px; /* Adjusted top */
-    left: 5px; /* Adjusted left */
-    width: 7px; /* Adjusted width */
-    height: 10px; /* Adjusted height */
-    border-right: 2px solid var(--md-sys-light-on-primary);
-    border-bottom: 2px solid var(--md-sys-light-on-primary);
-    transform: rotate(45deg);
-}
-
-.filter-group label input[type="checkbox"] { /* Target checkbox within label for alignment */
-    margin-bottom: 0; /* Reset potential bottom margin from checkbox itself */
-    display: inline-block; /* Ensure inline alignment with text */
-}
-
-.filter-group label {
-    display: flex; /* Use flexbox for label to align checkbox and text */
-    align-items: center; /* Vertically align checkbox and text */
-}
-
-
-/* Controls Container */
-.controls-container {
-    margin: 0 auto 24px auto; /* 24dp (3x8) margin bottom, auto horizontal */
-    padding: 0 24px; /* 24dp (3x8) horizontal padding */
-    max-width: 600px;
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Space out controls */
+    align-items: center; /* Vertically center label and select */
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 8px;
+    padding: 5px 10px;
+
 }
 
-/* Expand Control Buttons */
-.expand-control button {
-    padding: 10px 24px; /* Vertical: ~1.25x8, Horizontal: 3x8 */
-    font-size: var(--md-label-large-font-size);
-    font-weight: var(--md-label-large-font-weight);
-    border: none;
+.filter-group label {
+    margin-right: 8px;
+    font-weight: 500; /* Slightly bolder labels */
+    white-space: nowrap; /* Prevent label wrapping */
+}
+
+.filter-group select, .filter-group input[type="checkbox"] {
+    margin-right: 5px;  /* space between checkbox/dropdown and label */
+}
+
+
+.filter-group select {
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 14px;
+    background-color: white;
+    appearance: none; /* Remove default OS styling */
     cursor: pointer;
-    background-color: var(--md-sys-light-primary-container); /* Example container color button */
-    color: var(--md-sys-light-on-primary-container);
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, transform 0.2s; /* Added transform transition for active state */
-    box-shadow: var(--elevation-2); /* elevation-2 for buttons */
+    outline: none;
 }
 
-.expand-control button:hover {
-    background-color: var(--md-sys-light-primary); /* Hover color */
-    color: var(--md-sys-light-on-primary);
-    box-shadow: var(--elevation-3); /* elevation-3 on hover */
-    /* Hover lift removed */
+.dark-mode .filter-group select{
+    background-color: #333;
+    color: #fff;
+    border-color: #555;
 }
 
-.expand-control button:active {
-    background-color: var(--md-sys-light-primary-container); /* Slightly darker active state */
-    color: var(--md-sys-light-on-primary-container);
-    box-shadow: var(--elevation-1); /* elevation-1 on active - less prominent shadow */
-    transform: translateY(0); /* Reset transform on active */
+.dark-mode .filter-group {
+    background-color: rgba(255,255,255,0.1);
 }
 
-.expand-control button:focus {
-    outline: none; /* Remove default focus outline */
-    background-color: var(--md-sys-light-primary); /* Focus color */
-    color: var(--md-sys-light-on-primary);
-    box-shadow: var(--elevation-3), 0 0 0 3px rgba(var(--md-sys-light-primary), 0.5); /* Focus ring + elevation-3 */
+/* Controls (Expand All, Shortlist, Count) */
+
+.controls-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+.expand-control {
+    display: flex;
+    gap: 10px;
+}
 
-/* Course Count */
+#expandAllButton, #shortlistCountButton {
+    background-color: #007aff; /* Apple blue */
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#expandAllButton:hover, #shortlistCountButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
 .course-count {
-    font-size: var(--md-body-small-font-size);
-    color: var(--md-sys-light-on-surface-variant);
-    transition: color 0.3s; /* Added transition */
+    font-size: 14px;
+    color: #666;
 }
 
-/* Course List */
+.dark-mode .course-count {
+    color: #aaa;
+}
+
+/* Course Cards */
+
 #courseList {
-    margin: 0 auto;
-    padding: 0 24px; /* 24dp (3x8) horizontal padding */
-    max-width: 800px; /* Wider course list */
     display: grid;
-    /* Modified grid-template-columns to 1fr for single column layout */
     grid-template-columns: 1fr;
-    gap: 16px; /* 16dp (2x8) gap between cards */
+    gap: 20px;
 }
 
-/* Course Card */
 .course-card {
-    background-color: var(--md-sys-light-surface);
-    border-radius: 8px; /* 8dp rounded corners */
-    border: 1px solid var(--md-sys-light-outline-variant); /* Subtle outline */
-    box-shadow: var(--elevation-1); /* elevation-1 for cards */
-    padding: 16px; /* 16dp (2x8) padding */
-    transition: box-shadow 0.3s, border-color 0.3s, background-color 0.3s, color 0.3s, transform 0.2s; /* Added transform transition */
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    overflow: visible;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+    position: relative;
 }
 
-.course-card:hover {
-    box-shadow: var(--elevation-2); /* elevation-2 on hover */
-    border-color: var(--md-sys-light-primary); /* Example hover border */
-    /* Hover lift removed */
+.dark-mode .course-card {
+    background-color: #2c2c2e;
+    border-color: #444;
 }
 
 .course-header {
-    cursor: pointer;
-    margin-bottom: 12px; /* ~1.5x8 margin bottom */
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer; /* Indicate clickable header */
 }
 
-.course-header:focus-visible + .course-details { /* Focus visible on header expands details via sibling selector */
-    display: block; /* Example - consider more robust focus indication */
-}
-
-.course-title {
-    font-size: var(--md-title-medium-font-size);
-    font-weight: var(--md-title-medium-font-weight);
-    margin-bottom: 4px; /* 4dp margin bottom */
-    color: var(--md-sys-light-on-surface);
-    transition: color 0.3s; /* Added transition */
-}
-
-.course-id {
-    font-size: var(--md-body-medium-font-size);
-    font-weight: normal;
-    color: var(--md-sys-light-on-surface-variant);
-    transition: color 0.3s; /* Added transition */
-}
-
-.course-dates,
-.course-terms,
-.course-delivery {
-    margin: 6px 0; /* ~0.75x8 vertical margin */
-    font-size: var(--md-body-small-font-size);
-    color: var(--md-sys-light-on-surface-variant);
-    transition: color 0.3s; /* Added transition */
+.dark-mode .course-header{
+    border-bottom: 1px solid #444;
 }
 
 .course-title-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 }
 
-/* Shortlist Button */
-.shortlist-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, transform 0.2s;
-    color: var(--md-sys-light-primary);
+.course-title {
+    font-size: 1.1em;
+    font-weight: 600;
+    line-height: 1.4;
+    padding-right: 10px;
+    flex: 1;
 }
 
-.shortlist-button:hover {
-    background-color: var(--md-sys-light-primary-container);
+.course-id {
+    font-size: 0.9em;
+    color: #666;
+    margin-left: 4px;
+}
+.dark-mode .course-id{
+    color: #999;
 }
 
-.shortlist-button:active {
-    transform: scale(0.95);
+.course-dates, .course-terms, .course-delivery {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 4px;
 }
-
-.shortlist-icon {
-    font-size: 24px;
-    line-height: 1;
-}
-
-.shortlisted .shortlist-icon {
-    content: "★";
-    color: var(--md-sys-light-primary);
-}
-
-/* Shortlist Count Button */
-.shortlist-count {
-    margin-left: 16px;
-    padding: 10px 24px;
-    font-size: var(--md-label-large-font-size);
-    font-weight: var(--md-label-large-font-weight);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: var(--md-sys-light-secondary-container);
-    color: var(--md-sys-light-on-secondary-container);
-    transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
-    box-shadow: var(--elevation-1);
-}
-
-.shortlist-count:hover {
-    background-color: var(--md-sys-light-secondary);
-    color: var(--md-sys-light-on-secondary);
-    box-shadow: var(--elevation-2);
-}
-
-.shortlist-count:active {
-    box-shadow: var(--elevation-1);
-    transform: translateY(1px);
-}
-
-.expired-date,
-.expiring-soon {
-    color: var(--md-sys-light-error); /* Example error color for expiry */
-    font-weight: 500;
+.dark-mode .course-dates, .dark-mode .course-terms, .dark-mode .course-delivery {
+    color: #bbb;
 }
 
 .expired-date {
-    text-decoration: line-through;
+    color: #d9534f; /* Bootstrap danger color */
+    font-weight: bold;
+}
+
+.expiring-soon {
+    color: #f0ad4e; /* Bootstrap warning color */
+    font-weight: bold;
+}
+
+.course-description {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    white-space: pre-line;
 }
 
 .course-details {
-    display: none;
-    margin-top: 16px; /* 16dp (2x8) margin top */
-    padding-top: 16px; /* 16dp (2x8) padding top */
-    border-top: 1px solid var(--md-sys-light-outline-variant);
-    font-size: var(--md-body-medium-font-size);
-    color: var(--md-sys-light-on-surface);
-    transition: border-color 0.3s, color 0.3s; /* Added transition */
+    padding: 16px;
+    font-size: 0.95em;
 }
 
 .course-details p {
-    margin-bottom: 8px; /* 8dp margin bottom */
-    line-height: 1.4;
+    margin-bottom: 10px;
 }
 
 .course-details strong {
-    font-weight: 500; /* Medium font weight for strong elements */
-    color: var(--md-sys-light-on-surface); /* Ensure strong text is also on-surface color */
+    font-weight: 500;
 }
 
-
-/* Dark Mode Styles */
-body.dark-mode {
-    background-color: var(--md-sys-dark-background);
-    color: var(--md-sys-dark-on-background);
+.course-details a {
+    color: #007aff; /* Apple blue link */
+    text-decoration: none;
 }
 
-.dark-mode a {
-    color: var(--md-sys-dark-primary);
+.course-details a:hover {
+    text-decoration: underline;
+}
+.dark-mode .course-details a{
+    color: #4a90e2;
 }
 
-.dark-mode a:visited {
-    color: var(--md-sys-dark-secondary-container); /* More distinct visited link color in dark mode */
+/* AI Button */
+.button-group {
+    align-self: flex-start;
+    display: inline-flex;
+    gap: 0px;
+    align-items: center;
 }
 
-.dark-mode #themeToggle {
-    color: var(--md-sys-dark-on-surface-variant);
+.button-group button {
+    margin: 0;
+    padding: 12px;
 }
 
-.dark-mode #themeToggle:hover {
-    background-color: rgba(var(--md-sys-dark-on-surface-variant), 0.08);
+.magic-button,
+.shortlist-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.9em;
+    color: inherit;
+    transition: transform 0.3s;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
 }
 
-
-.dark-mode #searchInput {
-    border-color: var(--md-sys-dark-outline);
-    background-color: var(--md-sys-dark-surface);
-    color: var(--md-sys-dark-on-surface);
+.shortlist-button {
+    margin-left: -8px;
 }
 
-.dark-mode #searchInput:hover {
-    border-color: var(--md-sys-dark-primary); /* Hover border color */
+.magic-button:hover,
+.shortlist-button:hover {
+    transform: scale(1.2);
 }
 
-.dark-mode #searchInput:focus {
-    border-color: var(--md-sys-dark-primary);
-    box-shadow: var(--elevation-1), 0 0 0 2px rgba(var(--md-sys-dark-primary-container), 0.3);
+.magic-button.animate,
+.shortlist-button.animate {
+    animation: sparkle 0.3s ease-in-out;
 }
 
-.dark-mode #searchInput::placeholder {
-    color: var(--md-sys-dark-on-surface-variant);
-}
-
-
-.dark-mode .filters {
-    background-color: var(--md-sys-dark-surface-variant);
-    box-shadow: var(--elevation-1); /* elevation-1 for filters in dark mode */
-}
-
-.dark-mode .filters:hover {
-    box-shadow: var(--elevation-2); /* elevation-2 on hover in dark mode */
-}
-
-.dark-mode .shortlist-button {
-    color: var(--md-sys-dark-primary);
-}
-
-.dark-mode .shortlist-button:hover {
-    background-color: var(--md-sys-dark-primary-container);
-}
-
-.dark-mode .shortlisted .shortlist-icon {
-    color: var(--md-sys-dark-primary);
-}
-
-.dark-mode .shortlist-count {
-    background-color: var(--md-sys-dark-secondary-container);
-    color: var(--md-sys-dark-on-secondary-container);
-}
-
-.dark-mode .shortlist-count:hover {
-    background-color: var(--md-sys-dark-secondary);
-    color: var(--md-sys-dark-on-secondary);
-}
-
-.dark-mode .filter-group label {
-    color: var(--md-sys-dark-on-surface-variant); /* Fixed: Checkbox label text color in dark mode */
-}
-
-.dark-mode select {
-    border-color: var(--md-sys-dark-outline);
-    background-color: var(--md-sys-dark-surface);
-    color: var(--md-sys-dark-on-surface);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23CAC4D0'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E"); /* Dark mode arrow - adjust fill to match dark outline variant */
-}
-
-.dark-mode select:hover {
-    border-color: var(--md-sys-dark-primary); /* Hover border color */
-}
-
-.dark-mode select:focus {
-    border-color: var(--md-sys-dark-primary);
-    box-shadow: var(--elevation-1), 0 0 0 2px rgba(var(--md-sys-dark-primary-container), 0.3);
-}
-
-
-.dark-mode .filter-group input[type="checkbox"] {
-    border-color: var(--md-sys-dark-outline);
-    background-color: var(--md-sys-dark-surface);
-}
-
-.dark-mode .filter-group input[type="checkbox"]:hover {
-    border-color: var(--md-sys-dark-primary); /* Hover border color */
-}
-
-.dark-mode .filter-group input[type="checkbox"]:focus {
-    border-color: var(--md-sys-dark-primary);
-    box-shadow: 0 0 0 2px rgba(var(--md-sys-dark-primary-container), 0.3);
-}
-
-
-.dark-mode .filter-group input[type="checkbox"]:checked {
-    background-color: var(--md-sys-dark-primary);
-    border-color: var(--md-sys-dark-primary);
-}
-
-.dark-mode .filter-group input[type="checkbox"]:checked::before {
-    border-right-color: var(--md-sys-dark-on-primary);
-    border-bottom-color: var(--md-sys-dark-on-primary);
-}
-
-
-.dark-mode .expand-control button {
-    background-color: var(--md-sys-dark-primary-container);
-    color: var(--md-sys-dark-on-primary-container);
-    box-shadow: var(--elevation-2); /* elevation-2 for buttons in dark mode */
-}
-
-.dark-mode .expand-control button:hover {
-    background-color: var(--md-sys-dark-primary);
-    color: var(--md-sys-dark-on-primary);
-    box-shadow: var(--elevation-3); /* elevation-3 on hover in dark mode */
-    /* Hover lift removed */
-}
-
-.dark-mode .expand-control button:active {
-    background-color: var(--md-sys-dark-primary-container); /* Slightly darker active state */
-    color: var(--md-sys-dark-on-primary-container);
-    box-shadow: var(--elevation-1); /* elevation-1 on active - less prominent shadow */
-    transform: translateY(0); /* Reset transform on active */
-}
-
-
-.dark-mode .dark-mode .expand-control button:focus {
-    box-shadow: var(--elevation-3), 0 0 0 3px rgba(var(--md-sys-dark-primary), 0.5); /* Focus ring + elevation-3 */
-}
-
-
-.dark-mode .course-count {
-    color: var(--md-sys-dark-on-surface-variant);
-}
-
-
-.dark-mode .course-card {
-    background-color: var(--md-sys-dark-surface);
-    border-color: var(--md-sys-dark-outline-variant);
-    box-shadow: var(--elevation-1); /* elevation-1 for cards in dark mode */
-}
-
-.dark-mode .course-card:hover {
-    box-shadow: var(--elevation-2); /* elevation-2 on hover in dark mode */
-    border-color: var(--md-sys-dark-primary);
-}
-
-.dark-mode .course-title {
-    color: var(--md-sys-dark-on-surface);
-}
-
-.dark-mode .course-id {
-    color: var(--md-sys-dark-on-surface-variant);
-}
-
-.dark-mode .course-dates,
-.dark-mode .course-terms,
-.dark-mode .course-delivery {
-    color: var(--md-sys-dark-on-surface-variant);
-}
-
-.dark-mode .course-details {
-    border-top-color: var(--md-sys-dark-outline-variant);
-    color: var(--md-sys-dark-on-surface);
-}
-
-.dark-mode .course-details strong {
-    color: var(--md-sys-dark-on-surface);
-}
-
-/* Animation for shortlist action */
-@keyframes shortlistPop {
+/* Keep your existing sparkle animation */
+@keyframes sparkle {
     0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.3); }
     100% { transform: scale(1); }
 }
 
-.shortlist-button.animate {
-    animation: shortlistPop 0.3s ease-in-out;
+/* Shortlist Button */
+
+.shortlist-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0;
+    color: #ccc;
+    transition: color 0.3s, transform 0.2s ease-in-out; /* Add transform transition */
+    margin-left: 10px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    .controls-container {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
-    }
+.shortlist-button.animate {
+    transform: scale(1.2);  /* Enlarge slightly on click */
+}
 
-    .expand-control {
-        display: flex;
-        gap: 8px;
-    }
+.shortlist-icon {
+    vertical-align: text-bottom; /* fixes tiny offset*/
+}
 
-    .shortlist-count {
-        margin-left: 0;
-    }
+.shortlisted .shortlist-button {
+    color: #007aff; /* Gold star */
+}
+.dark-mode .shortlisted .shortlist-button{
+    color: #007aff;
+}
+.dark-mode .shortlist-button{
+    color: #777;
+}
+
+/* Make sure shortlisted cards stand out slightly */
+.course-card.shortlisted {
+    border-color: #007aff;
+}
+.dark-mode .course-card.shortlisted{
+    border-color: #007aff;
+}
+
+.magic-button:hover {
+    transform: scale(1.2);
+    color: yellow;
 }

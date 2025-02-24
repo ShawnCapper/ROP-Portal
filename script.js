@@ -32,8 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let shortlistedCourses = new Set(JSON.parse(localStorage.getItem('shortlistedCourses') || '[]'));
 
 function updateShortlistCount() {
-    const count = shortlistedCourses.size;
-    document.getElementById('shortlistCount').textContent = count;
+    document.getElementById('shortlistCount').textContent = shortlistedCourses.size;
 }
 
 function toggleShortlist(courseId, button) {
@@ -71,13 +70,14 @@ function createCourseCard(course) {
         expiryStatus.isExpiringSoon ? 'expiring-soon' : '';
 
     // Set course title and ID
-    title.innerHTML = `${course.Title} <span class="course-id">(#${course['Course ID']})</span>`;
+    title.innerHTML = `${course.Title} <span class="course-id"></span>`;
 
     // Add dates, terms, and delivery info
     header.innerHTML += `
         <div class="course-dates">Posted: ${course.Posted} | Expires: <span class="${expiryClass}">${course.Expires}</span></div>
         <div class="course-terms">Terms: ${course.Terms.join(', ')}</div>
         <div class="course-delivery">Delivery: ${course['Delivery Method']}</div>
+        <div class="course-description">${course.Description.replace(/\\n/g, '<br>')}</div>
     `;
 
     const details = card.querySelector('.course-details');
@@ -88,10 +88,10 @@ function createCourseCard(course) {
         .join(', ');
 
     details.innerHTML = `
+        <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
         <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
         <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
         <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-        <p><strong>Description:</strong> ${course.Description}</p>
         <p><strong>Student Roles:</strong> ${course['Student Roles']}</p>
         <p><strong>Academic Outcomes:</strong> ${course['Academic Outcomes']}</p>
         <p><strong>Training & Mentorship:</strong> ${course['Training & Mentorship']}</p>
@@ -123,6 +123,20 @@ function createCourseCard(course) {
     shortlistButton.addEventListener('click', (e) => {
         e.stopPropagation();
         toggleShortlist(course['Course ID'], shortlistButton);
+    });
+
+    // Stop propagation of clicks on buttons
+    const buttonGroup = card.querySelector('.button-group');
+    buttonGroup.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+
+    // Add click handler only to expandable elements
+    const expandableElements = card.querySelectorAll('.expandable');
+    expandableElements.forEach(element => {
+        element.addEventListener('click', () => {
+            card.classList.toggle('expanded');
+        });
     });
 
     return card;

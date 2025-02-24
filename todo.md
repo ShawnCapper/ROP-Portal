@@ -12,8 +12,7 @@
 
 ---
 
-Update to handle \n being displayed as a newline
-
+- [x] Update to handle \n being displayed as a newline
 - [x] Include the number of days remaining for course expiry - change the text to red if the due date to apply is within 3 days
 - [x] Expand all button
 - [x] Limit the allowed card size to a natural size
@@ -29,6 +28,9 @@ Update to handle \n being displayed as a newline
 - [ ] Disclaimer: course information is for reference only and is not updated live thus may be out of date (view on clnx.utoronto.ca)
 - [ ] Make site ADA and ODA compliant
 - [ ] There seems to be an added course to replace the one that expired the day after postings
+- [ ] Gradient sparkle on course border when hovering the 'magic' button
+- [ ] Gradient on hover with varying intensity based on position within the expand and shortlist button
+- [ ] Search box and dark mode switch should be visible while scrolling
 
 # Costly Options
 
@@ -41,3 +43,4 @@ Update to handle \n being displayed as a newline
 ---
 
 - [ ] Update to say showing 1 course instead of courses
+- [ ] The card specific button group is lowered when the title spans multiple lines.
