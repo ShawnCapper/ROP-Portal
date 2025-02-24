@@ -1,29 +1,43 @@
 // Theme handling
 document.addEventListener('DOMContentLoaded', () => {
     const themeToggle = document.getElementById('themeToggle');
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    // Check for saved theme preference or use system preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) {
-        document.body.classList.toggle('dark-mode', savedTheme === 'dark');
-    } else {
-        // Check system preference
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.body.classList.add('dark-mode');
-        }
-    }
-
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-        if (!localStorage.getItem('theme')) {  // Only if no manual preference is saved
-            document.body.classList.toggle('dark-mode', e.matches);
+    // Use RAF to ensure DOM is ready
+    requestAnimationFrame(() => {
+        // Check for saved theme preference or use system preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+        } else {
+            // Force a fresh check of system preference
+            const prefersDark = darkModeMediaQuery.matches;
+            document.body.classList.toggle('dark-mode', prefersDark);
+            localStorage.setItem('theme', prefersDark ? 'dark' : 'light');
         }
     });
 
-    // Theme toggle button handler
+    // Use both change and addListener for broader browser support
+    try {
+        darkModeMediaQuery.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                document.body.classList.toggle('dark-mode', e.matches);
+                localStorage.setItem('theme', e.matches ? 'dark' : 'light');
+            }
+        });
+    } catch (e) {
+        // Fallback for older browsers
+        darkModeMediaQuery.addListener((e) => {
+            if (!localStorage.getItem('theme')) {
+                document.body.classList.toggle('dark-mode', e.matches);
+                localStorage.setItem('theme', e.matches ? 'dark' : 'light');
+            }
+        });
+    }
+
     themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        const isDark = document.body.classList.contains('dark-mode');
+        const isDark = !document.body.classList.contains('dark-mode');
+        document.body.classList.toggle('dark-mode', isDark);
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
     });
 });
