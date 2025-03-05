@@ -1,3 +1,58 @@
+/* Base responsive layout */
+.header-container, .filters, .controls-container {
+    padding: 10px;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select {
+        width: 100%;
+    }
+
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .expand-control {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .course-card {
+        margin: 10px 5px;
+    }
+
+    .course-title-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button-group {
+        align-self: flex-end;
+    }
+}
+
 /* Overall Page Styling */
 body {
     margin: 100px 20px 20px 20px;
