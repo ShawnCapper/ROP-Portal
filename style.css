@@ -186,8 +186,6 @@ body.dark-mode {
     border: 2px solid #ddd;
     border-radius: 12px;
     overflow: visible;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s;
     position: relative;
 }
 
@@ -285,7 +283,7 @@ body.dark-mode {
 .button-group {
     align-self: flex-start;
     display: inline-flex;
-    gap: 0px;
+    gap: 0;
     align-items: center;
 }
 
@@ -371,7 +369,79 @@ body.dark-mode {
     border-color: #007aff;
 }
 
-.magic-button:hover {
-    transform: scale(1.2);
-    color: yellow;
+
+
+.term-button {
+    display: inline-block;
+    background-color: rgba(0, 122, 255, 0.1);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.term-button:hover {
+    background-color: rgba(0, 122, 255, 0.2);
+}
+
+.dark-mode .term-button {
+    background-color: rgba(74, 144, 226, 0.1);
+    border-color: rgba(74, 144, 226, 0.2);
+}
+
+.dark-mode .term-button:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+}
+
+.term-button {
+    display: inline-block;
+    background-color: rgba(0, 122, 255, 0.1);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.term-button:hover {
+    background-color: rgba(0, 122, 255, 0.2);
+}
+
+.dark-mode .term-button {
+    background-color: rgba(74, 144, 226, 0.1);
+    border-color: rgba(74, 144, 226, 0.2);
+}
+
+.dark-mode .term-button:hover {
+    background-color: rgba(74, 144, 226, 0.2);
+}
+
+.delivery-button {
+    display: inline-block;
+    background-color: rgba(0, 122, 255, 0.1);
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    margin: 2px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s;
+}
+
+.delivery-button:hover {
+    background-color: rgba(0, 122, 255, 0.2);
+}
+
+.dark-mode .delivery-button {
+    background-color: rgba(74, 144, 226, 0.1);
+    border-color: rgba(74, 144, 226, 0.2);
+}
+
+.dark-mode .delivery-button:hover {
+    background-color: rgba(74, 144, 226, 0.2);
 }

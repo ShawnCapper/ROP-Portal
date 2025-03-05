@@ -41,6 +41,7 @@
 ---
 
 - [ ] AI to take in a resume and list a number of courses the student may be suitable for
+- [ ] AI language translation
 
 # Bugs, Not Features
 

@@ -75,25 +75,45 @@ function createCourseCard(course) {
     const card = template.content.cloneNode(true).querySelector('.course-card');
 
     const header = card.querySelector('.course-header');
-    const title = card.querySelector('.course-title');
-    const shortlistButton = card.querySelector('.shortlist-button');
+
+    // Set initial state
+    card.dataset.showingAi = 'false';
 
     // Check expiry status
     const expiryStatus = checkExpiryStatus(course.Expires);
     const expiryClass = expiryStatus.isExpired ? 'expired-date' :
         expiryStatus.isExpiringSoon ? 'expiring-soon' : '';
 
-    // Set course title and ID
-    title.innerHTML = `${course.Title} <span class="course-id"></span>`;
-
-    // Add dates, terms, and delivery info
-    header.innerHTML += `
-        <div class="course-dates">Posted: ${course.Posted} | Expires: <span class="${expiryClass}">${course.Expires}</span></div>
-        <div class="course-terms">Terms: ${course.Terms.join(', ')}</div>
-        <div class="course-delivery">Delivery: ${course['Delivery Method']}</div>
-        <div class="course-description">${course.Description.replace(/\\n/g, '<br>')}</div>
+    // Create title section
+    const titleHTML = `
+        <div class="course-title-row">
+            <div class="course-title">${course.Title}</div>
+            <div class="button-group">
+                <button class="magic-button" aria-label="Magic action">
+                    <span class="magic-icon">✨</span>
+                </button>
+                <button class="shortlist-button" aria-label="Shortlist this course">
+                    <span class="shortlist-icon">☆</span>
+                </button>
+            </div>
+        </div>
     `;
 
+    // Set header content
+    const termButtons = course.Terms.map(term =>
+        `<span class="term-button" data-term="${term}">${term}</span>`
+    ).join(' ');
+
+    header.innerHTML = titleHTML + `
+    <div class="course-dates">Posted: ${course.Posted} | Expires: <span class="${expiryClass}">${course.Expires}</span></div>
+    <div class="course-terms">Terms: ${termButtons}</div>
+    <div class="course-delivery">Delivery: <span class="delivery-button" data-delivery="${course['Delivery Method']}">${course['Delivery Method']}</span></div>
+    <div class="course-description">${course.Description.replace(/\n/g, '<br>')}</div>
+    `;
+
+    // Re-acquire button references after innerHTML update
+    const newMagicButton = header.querySelector('.magic-button');
+    const newShortlistButton = header.querySelector('.shortlist-button');
     const details = card.querySelector('.course-details');
 
     // Create faculty supervisor links
@@ -101,57 +121,101 @@ function createCourseCard(course) {
         .map(([_, [name, url]]) => `<a href="${url}" target="_blank">${name}</a>`)
         .join(', ');
 
-    details.innerHTML = `
-        <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
-        <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
-        <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
-        <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-        <p><strong>Student Roles:</strong> ${course['Student Roles']}</p>
-        <p><strong>Academic Outcomes:</strong> ${course['Academic Outcomes']}</p>
-        <p><strong>Training & Mentorship:</strong> ${course['Training & Mentorship']}</p>
-        <p><strong>Selection Criteria:</strong> ${course['Selection Criteria']}</p>
-    `;
+    // Store both regular and AI content
+    const contentVersions = {
+        regular: {
+            description: course.Description || '',
+            studentRoles: course['Student Roles'] || '',
+            academicOutcomes: course['Academic Outcomes'] || '',
+            trainingMentorship: course['Training & Mentorship'] || '',
+            selectionCriteria: course['Selection Criteria'] || ''
+        },
+        ai: {
+            description: course['AI_Description'] || '',
+            studentRoles: course['AI_Student Roles'] || '',
+            academicOutcomes: course['AI_Academic Outcomes'] || '',
+            trainingMentorship: course['AI_Training & Mentorship'] || '',
+            selectionCriteria: course['AI_Selection Criteria'] || ''
+        }
+    };
 
-    // Add click handler for shortlist button
-    const shortlistBtn = card.querySelector('.shortlist-button');
-    shortlistBtn.addEventListener('click', () => {
-        toggleShortlist(course['Course ID'], shortlistBtn);
+    function updateContent(showAi) {
+        const content = showAi ? contentVersions.ai : contentVersions.regular;
+
+        // Update description in header
+        const descriptionDiv = header.querySelector('.course-description');
+        if (descriptionDiv) {
+            descriptionDiv.innerHTML = content.description.replace(/\n/g, '<br>');
+        }
+
+        // Update details section
+        details.innerHTML = `
+            <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
+            <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
+            <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
+            <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
+            <p><strong>Student Roles:</strong> ${content.studentRoles}</p>
+            <p><strong>Academic Outcomes:</strong> ${content.academicOutcomes}</p>
+            <p><strong>Training & Mentorship:</strong> ${content.trainingMentorship}</p>
+            <p><strong>Selection Criteria:</strong> ${content.selectionCriteria}</p>
+        `;
+    }
+
+    // Add magic button click handler
+    newMagicButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const showingAi = card.dataset.showingAi === 'true';
+        card.dataset.showingAi = (!showingAi).toString();
+        updateContent(!showingAi);
+
+        // Add animation class
+        newMagicButton.classList.add('animate');
+        setTimeout(() => newMagicButton.classList.remove('animate'), 300);
+    });
+
+    // Terms button click handler
+    header.querySelectorAll('.term-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const term = e.target.dataset.term;
+            const termFilter = document.getElementById('termFilter');
+            termFilter.value = term;
+            termFilter.dispatchEvent(new Event('change'));
+        });
+    });
+
+    // Delivey button click handler
+    header.querySelector('.delivery-button').addEventListener('click', (e) => {
+        e.stopPropagation();
+        const delivery = e.target.dataset.delivery;
+        const deliveryFilter = document.getElementById('deliveryFilter');
+        deliveryFilter.value = delivery;
+        deliveryFilter.dispatchEvent(new Event('change'));
+    });
+
+    // Set initial content
+    updateContent(false);
+
+    // Add event listeners
+    header.addEventListener('click', (e) => {
+        if (!e.target.closest('.shortlist-button') && !e.target.closest('.magic-button')) {
+            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+        }
+    });
+
+    newShortlistButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleShortlist(course['Course ID'], newShortlistButton);
     });
 
     // Initialize shortlist state
     if (shortlistedCourses.has(course['Course ID'])) {
         card.classList.add('shortlisted');
-        card.querySelector('.shortlist-icon').textContent = '★';
+        header.querySelector('.shortlist-icon').textContent = '★';
     }
 
     // Initialize the details visibility based on current expanded state
     details.style.display = isExpanded ? 'block' : 'none';
-
-    // Add event listeners
-    header.addEventListener('click', (e) => {
-        if (!e.target.closest('.shortlist-button')) {
-            details.style.display = details.style.display === 'none' ? 'block' : 'none';
-        }
-    });
-
-    shortlistButton.addEventListener('click', (e) => {
-        e.stopPropagation();
-        toggleShortlist(course['Course ID'], shortlistButton);
-    });
-
-    // Stop propagation of clicks on buttons
-    const buttonGroup = card.querySelector('.button-group');
-    buttonGroup.addEventListener('click', (e) => {
-        e.stopPropagation();
-    });
-
-    // Add click handler only to expandable elements
-    const expandableElements = card.querySelectorAll('.expandable');
-    expandableElements.forEach(element => {
-        element.addEventListener('click', () => {
-            card.classList.toggle('expanded');
-        });
-    });
 
     return card;
 }
@@ -238,7 +302,7 @@ function filterCourses(courses) {
 // Main function to load and display courses
 async function loadCourses() {
     try {
-        const response = await fetch('ROP_Courses_2025-26(Feb17).json');
+        const response = await fetch('ROP_Courses_2025-26(Feb19).json');
         const courses = await response.json();
 
         // Populate filters
