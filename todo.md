@@ -28,7 +28,6 @@
 - [ ] Disclaimer: course information is for reference only and is not updated live thus may be out of date (view on clnx.utoronto.ca)
 - [ ] Make site ADA and ODA compliant; AI generated summaries may contain inacuracies
 - [ ] Gradient sparkle on course border when hovering the 'magic' button
-- [ ] Gradient on hover with varying intensity based on position within the expand and shortlist button
 - [x] Search box and dark mode switch should be visible while scrolling
 - [ ] Wave the magic wand to AI summarize all cards
 - [ ] User defined font size
