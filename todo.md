@@ -19,7 +19,7 @@
 - [x] Star - add to shortlist (saved in browser)
 - [ ] Comparison tool 
 - [ ] Export shortlist into a CSV/excel file
-- [ ] Toggle between AI generated summary and full description
+- [x] Toggle between AI generated summary and full description
 - [x] Show number of results
 - [x] Dark mode and light mode (default to system preference)
 - [ ] Required documents at bottom
@@ -27,7 +27,6 @@
 - [x] New UI design language \[implemented Material Design 3\] 
 - [ ] Disclaimer: course information is for reference only and is not updated live thus may be out of date (view on clnx.utoronto.ca)
 - [ ] Make site ADA and ODA compliant; AI generated summaries may contain inacuracies
-- [ ] There seems to be an added course to replace the one that expired the day after postings
 - [ ] Gradient sparkle on course border when hovering the 'magic' button
 - [ ] Gradient on hover with varying intensity based on position within the expand and shortlist button
 - [x] Search box and dark mode switch should be visible while scrolling
@@ -35,6 +34,8 @@
 - [ ] User defined font size
 - [ ] Dyslexic friendly fonts
 - [ ] Tags for courses based on their descriptions
+- [x] Jump to top button
+- [ ] Handle bullet points and numbered lists in the description
 
 # Costly Options
 
@@ -47,5 +48,11 @@
 
 ---
 
-- [ ] Update to say showing 1 course instead of courses
-- [ ] The card specific button group is lowered when the title spans multiple lines.
+- [x] Update to say showing 1 course instead of courses
+- [x] The card specific button group is lowered when the title spans multiple lines.
+- [x] Limit size of cards to a natural size
+- [x] Fix size of header to same width of cards 
+- [x] Empty string displaying in the department filters
+- [x] Hide expired posts filter hiding courses on day that application is due
+- [x] Search box and dark mode switch are stacked on top of eachother when on small screens
+- [x] Course title is centred on small screens when the title only spans one line 
