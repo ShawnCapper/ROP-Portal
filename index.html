@@ -9,13 +9,15 @@
 </head>
 <body>
 <div class="header-container">
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search course by ID, title, or description...">
-    </div>
-    <div class="theme-switch">
-        <button id="themeToggle" aria-label="Toggle dark mode">
-            <span class="theme-icon">🌓</span>
-        </button>
+    <div class="header-content">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search course by ID, title, or description...">
+        </div>
+        <div class="theme-switch">
+            <button id="themeToggle" aria-label="Toggle dark mode">
+                <span class="theme-icon">🌓</span>
+            </button>
+        </div>
     </div>
 </div>
 
@@ -87,6 +89,8 @@
         <div class="course-details"></div>
     </div>
 </template>
+
+<button id="backToTopBtn" aria-label="Back to top">↑</button>
 
 <script src="script.js"></script>
 </body>

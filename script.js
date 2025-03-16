@@ -100,14 +100,13 @@ function createCourseCard(course) {
     `;
 
     // Set header content
-    const termButtons = course.Terms.map(term =>
-        `<span class="term-button" data-term="${term}">${term}</span>`
-    ).join(' ');
+    const termsList = course.Terms.join(', ');
 
     header.innerHTML = titleHTML + `
     <div class="course-dates">Posted: ${course.Posted} | Expires: <span class="${expiryClass}">${course.Expires}</span></div>
-    <div class="course-terms">Terms: ${termButtons}</div>
-    <div class="course-delivery">Delivery: <span class="delivery-button" data-delivery="${course['Delivery Method']}">${course['Delivery Method']}</span></div>
+    <div class="course-terms-delivery">
+        Terms: ${termsList} | Delivery: ${course['Delivery Method']}
+    </div>
     <div class="course-description">${course.Description.replace(/\n/g, '<br>')}</div>
     `;
 
@@ -145,20 +144,20 @@ function createCourseCard(course) {
         // Update description in header
         const descriptionDiv = header.querySelector('.course-description');
         if (descriptionDiv) {
-            descriptionDiv.innerHTML = content.description.replace(/\n/g, '<br>');
+            descriptionDiv.innerHTML = formatTextWithLists(content.description);
         }
 
         // Update details section
         details.innerHTML = `
-            <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
-            <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
-            <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
-            <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-            <p><strong>Student Roles:</strong> ${content.studentRoles}</p>
-            <p><strong>Academic Outcomes:</strong> ${content.academicOutcomes}</p>
-            <p><strong>Training & Mentorship:</strong> ${content.trainingMentorship}</p>
-            <p><strong>Selection Criteria:</strong> ${content.selectionCriteria}</p>
-        `;
+        <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
+        <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
+        <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
+        <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
+        <p><strong>Student Roles:</strong> ${formatTextWithLists(content.studentRoles)}</p>
+        <p><strong>Academic Outcomes:</strong> ${formatTextWithLists(content.academicOutcomes)}</p>
+        <p><strong>Training & Mentorship:</strong> ${formatTextWithLists(content.trainingMentorship)}</p>
+        <p><strong>Selection Criteria:</strong> ${formatTextWithLists(content.selectionCriteria)}</p>
+    `;
     }
 
     // Add magic button click handler
@@ -171,26 +170,6 @@ function createCourseCard(course) {
         // Add animation class
         newMagicButton.classList.add('animate');
         setTimeout(() => newMagicButton.classList.remove('animate'), 300);
-    });
-
-    // Terms button click handler
-    header.querySelectorAll('.term-button').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const term = e.target.dataset.term;
-            const termFilter = document.getElementById('termFilter');
-            termFilter.value = term;
-            termFilter.dispatchEvent(new Event('change'));
-        });
-    });
-
-    // Delivey button click handler
-    header.querySelector('.delivery-button').addEventListener('click', (e) => {
-        e.stopPropagation();
-        const delivery = e.target.dataset.delivery;
-        const deliveryFilter = document.getElementById('deliveryFilter');
-        deliveryFilter.value = delivery;
-        deliveryFilter.dispatchEvent(new Event('change'));
     });
 
     // Set initial content
@@ -245,7 +224,10 @@ function populateFilters(courses) {
     const deliveryModes = new Set();
 
     courses.forEach(course => {
-        departments.add(course.Department);
+        // Ensure department is never empty in the filter
+        if (course.Department) {
+            departments.add(course.Department);
+        }
         course.Terms.forEach(term => terms.add(term));
         deliveryModes.add(course['Delivery Method']);
     });
@@ -291,7 +273,7 @@ function filterCourses(courses) {
         const matchesDepartment = !selectedDepartment || course.Department === selectedDepartment;
         const matchesTerm = !selectedTerm || course.Terms.includes(selectedTerm);
         const matchesDelivery = !selectedDelivery || course['Delivery Method'] === selectedDelivery;
-        const matchesActive = !hideExpired || new Date(course.Expires) > new Date();
+        const matchesActive = !hideExpired || !checkExpiryStatus(course.Expires).isExpired;
         const matchesShortlist = !showShortlistedOnly || shortlistedCourses.has(course['Course ID']);
 
         return matchesSearch && matchesDepartment && matchesTerm &&
@@ -339,6 +321,67 @@ function displayCourses(courses) {
     updateCourseCount(filteredCourses.length);
 }
 
+// Function to format text with proper list handling
+function formatTextWithLists(text) {
+    if (!text) return '';
+
+    // Split text into lines
+    const lines = text.split('\n');
+    let inList = false;
+    let listType = null; // 'ul' or 'ol'
+    let formattedText = '';
+
+    lines.forEach((line, index) => {
+        // Check for bullet points (*, -, •)
+        const bulletMatch = line.trim().match(/^(\*|-|•|\+)\s+(.+)$/);
+        // Check for numbered lists (1., 2., etc.)
+        const numberedMatch = line.trim().match(/^(\d+)[.)]\s+(.+)$/);
+
+        if (bulletMatch) {
+            // Start a new unordered list if not already in one
+            if (!inList || listType !== 'ul') {
+                if (inList) formattedText += `</${listType}>`;
+                formattedText += '<ul>';
+                listType = 'ul';
+                inList = true;
+            }
+            formattedText += `<li>${bulletMatch[2]}</li>`;
+        }
+        else if (numberedMatch) {
+            // Start a new ordered list if not already in one
+            if (!inList || listType !== 'ol') {
+                if (inList) formattedText += `</${listType}>`;
+                formattedText += '<ol>';
+                listType = 'ol';
+                inList = true;
+            }
+            formattedText += `<li>${numberedMatch[2]}</li>`;
+        }
+        else {
+            // End current list if we encounter a non-list line
+            if (inList) {
+                formattedText += `</${listType}>`;
+                inList = false;
+                listType = null;
+            }
+
+            // Only add paragraph if line isn't empty
+            if (line.trim()) {
+                formattedText += `${line}<br>`;
+            } else {
+                formattedText += '<br>';
+            }
+        }
+    });
+
+    // Close any open list at the end
+    if (inList) {
+        formattedText += `</${listType}>`;
+    }
+
+    return formattedText;
+}
+
 // Initialize the page
 document.addEventListener('DOMContentLoaded', loadCourses);
 document.getElementById('expandAllButton').addEventListener('click', toggleAllCards);
@@ -359,5 +402,37 @@ function toggleAllCards() {
 }
 
 function updateCourseCount(count) {
-    document.getElementById('courseCount').textContent = count;
+    const countElement = document.getElementById('courseCount');
+    countElement.textContent = count;
+
+    // Get the parent element that contains the text
+    const countContainer = countElement.parentElement;
+
+    // Replace the text content to handle singular/plural correctly
+    countContainer.innerHTML = `Showing <span id="courseCount">${count}</span> ${count === 1 ? 'course' : 'courses'}`;
 }
+
+// Back to top button functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const backToTopButton = document.getElementById('backToTopBtn');
+
+    // Initially hide the button (redundant but ensures it's hidden)
+    backToTopButton.style.display = 'none';
+
+    // Show button when user scrolls down 300px
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopButton.style.display = 'flex';
+        } else {
+            backToTopButton.style.display = 'none';
+        }
+    });
+
+    // Smooth scroll to top when button is clicked
+    backToTopButton.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
