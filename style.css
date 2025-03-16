@@ -1,3 +1,72 @@
+/* Base responsive layout */
+.header-container, .filters, .controls-container {
+    padding: 10px;
+}
+
+/* Mobile-specific styles */
+@media screen and (max-width: 768px) {
+    .header-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .search-box {
+        flex: 1;
+        min-width: 150px;
+        max-width: calc(100% - 60px);
+    }
+
+    .filters {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .filter-group {
+        width: auto;
+        flex: 0 0 auto;
+        margin-bottom: 5px;
+    }
+
+    .filter-group select {
+        width: auto;
+        min-width: 120px;
+    }
+    .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .expand-control {
+        display: flex;
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    .course-card {
+        margin: 10px 5px;
+    }
+
+    .course-title-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .course-title {
+        text-align: left;
+        align-self: flex-start;
+        width: 100%;
+    }
+
+    .button-group {
+        align-self: flex-end;
+    }
+}
+
 /* Overall Page Styling */
 body {
     margin: 100px 20px 20px 20px;
@@ -24,6 +93,14 @@ body.dark-mode {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 }
 
 .dark-mode .header-container {
@@ -85,9 +162,13 @@ body.dark-mode {
 /* Filters */
 .filters {
     display: flex;
-    flex-wrap: wrap; /* Wrap filters on smaller screens */
-    gap: 10px; /* Spacing between filter groups */
-    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 0 auto 20px auto; /* Center horizontally with bottom margin */
+    justify-content: left;
+    max-width: 1200px; /* Match the card max width */
+    width: 100%;
+    padding: 10px;
 }
 
 .filter-group {
@@ -136,10 +217,13 @@ body.dark-mode {
 .controls-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 10px;
     flex-wrap: wrap;
     gap: 10px;
+    max-width: 1200px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .expand-control {
@@ -174,8 +258,9 @@ body.dark-mode {
 /* Course Cards */
 
 #courseList {
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
 }
 
@@ -187,6 +272,8 @@ body.dark-mode {
     border-radius: 12px;
     overflow: visible;
     position: relative;
+    width: 100%;
+    max-width: 1200px;
 }
 
 .dark-mode .course-card {
@@ -444,4 +531,71 @@ body.dark-mode {
 
 .dark-mode .delivery-button:hover {
     background-color: rgba(74, 144, 226, 0.2);
+}
+
+/* Back to Top Button */
+#backToTopBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(0, 122, 255, 0.15); /* Light blue tint in light mode */
+    color: #0056b3; /* Blue text color for better contrast */
+    border: 1px solid rgba(0, 122, 255, 0.3);
+    font-size: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+#backToTopBtn:hover {
+    background-color: rgba(0, 122, 255, 0.25);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dark-mode #backToTopBtn {
+    background-color: rgba(74, 144, 226, 0.25);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode #backToTopBtn:hover {
+    background-color: rgba(74, 144, 226, 0.4);
+}
+
+.course-terms-delivery {
+    font-size: 0.9em;
+    color: #777;
+    margin-top: 4px;
+}
+
+.dark-mode .course-terms-delivery {
+    color: #bbb;
+}
+
+.course-description ul,
+.course-description ol,
+.course-details ul,
+.course-details ol {
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.course-description li,
+.course-details li {
+    margin-bottom: 4px;
+}
+
+.course-description ul li,
+.course-details ul li {
+    list-style-type: disc;
 }
