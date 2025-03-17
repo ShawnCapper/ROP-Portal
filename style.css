@@ -599,3 +599,34 @@ body.dark-mode {
 .course-details ul li {
     list-style-type: disc;
 }
+
+.export-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: 10px;
+}
+
+.export-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+.export-icon {
+    font-size: 16px;
+}
+
+.dark-mode .export-button {
+    background-color: #388e3c; /* Darker green for dark mode */
+}
+
+.dark-mode .export-button:hover {
+    background-color: #2e7d32; /* Even darker green on hover in dark mode */
+}

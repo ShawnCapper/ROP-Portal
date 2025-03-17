@@ -284,7 +284,7 @@ function filterCourses(courses) {
 // Main function to load and display courses
 async function loadCourses() {
     try {
-        const response = await fetch('ROP_Courses_2025-26(Feb19).json');
+        const response = await fetch('ROP_Courses_2025-26.json');
         const courses = await response.json();
 
         // Populate filters
@@ -410,6 +410,91 @@ function updateCourseCount(count) {
 
     // Replace the text content to handle singular/plural correctly
     countContainer.innerHTML = `Showing <span id="courseCount">${count}</span> ${count === 1 ? 'course' : 'courses'}`;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const exportButton = document.getElementById('exportShortlistButton');
+
+    if (exportButton) {
+        exportButton.addEventListener('click', exportShortlistedCourses);
+    }
+});
+
+function exportShortlistedCourses() {
+    // If no shortlisted courses, show message and return
+    if (shortlistedCourses.size === 0) {
+        alert('No courses have been shortlisted yet.');
+        return;
+    }
+
+    // Load all courses to filter the shortlisted ones
+    fetch('ROP_Courses_2025-26.json')
+        .then(response => response.json())
+        .then(courses => {
+            // Filter only shortlisted courses
+            const shortlistedData = courses.filter(course =>
+                shortlistedCourses.has(course['Course ID']));
+
+            if (shortlistedData.length === 0) {
+                alert('No shortlisted courses found.');
+                return;
+            }
+
+            // Get first course to determine all available fields
+            const sampleCourse = shortlistedData[0];
+
+            // Get all keys except AI-prefixed ones
+            const headers = Object.keys(sampleCourse).filter(key => !key.startsWith('AI_'));
+
+            // Start with headers
+            let csvContent = headers.join(',') + '\n';
+
+            // Add each course data
+            shortlistedData.forEach(course => {
+                const row = headers.map(header => {
+                    let value = course[header];
+
+                    // Handle arrays (like Terms or Required Documents)
+                    if (Array.isArray(value)) {
+                        return `"${value.join(', ').replace(/"/g, '""')}"`;
+                    }
+
+                    // Handle objects (like Faculty Supervisor(s))
+                    else if (typeof value === 'object' && value !== null) {
+                        try {
+                            return `"${JSON.stringify(value).replace(/"/g, '""')}"`;
+                        } catch (e) {
+                            return '""';
+                        }
+                    }
+
+                    // Handle strings (escape quotes and wrap in quotes)
+                    else if (typeof value === 'string') {
+                        return `"${value.replace(/"/g, '""')}"`;
+                    }
+
+                    // Handle null/undefined
+                    else {
+                        return value || '';
+                    }
+                });
+
+                csvContent += row.join(',') + '\n';
+            });
+
+            // Create downloadable link
+            const encodedUri = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csvContent);
+            const link = document.createElement('a');
+            link.setAttribute('href', encodedUri);
+            link.setAttribute('download', 'shortlisted_courses.csv');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        })
+        .catch(error => {
+            console.error('Error exporting shortlisted courses:', error);
+            alert('Error exporting shortlisted courses. Please try again.');
+        });
 }
 
 // Back to top button functionality

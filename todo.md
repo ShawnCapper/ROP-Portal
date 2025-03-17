@@ -18,7 +18,7 @@
 - [x] Limit the allowed card size to a natural size
 - [x] Star - add to shortlist (saved in browser)
 - [ ] Comparison tool 
-- [ ] Export shortlist into a CSV/excel file
+- [x] Export shortlist into a CSV/excel file
 - [x] Toggle between AI generated summary and full description
 - [x] Show number of results
 - [x] Dark mode and light mode (default to system preference)
@@ -34,7 +34,7 @@
 - [ ] Dyslexic friendly fonts
 - [ ] Tags for courses based on their descriptions
 - [x] Jump to top button
-- [ ] Handle bullet points and numbered lists in the description
+- [ ] Snap scrolling to cards
 
 # Costly Options
 
@@ -55,3 +55,5 @@
 - [x] Hide expired posts filter hiding courses on day that application is due
 - [x] Search box and dark mode switch are stacked on top of eachother when on small screens
 - [x] Course title is centred on small screens when the title only spans one line 
+- [ ] Handle number lists separated with nested bullet point lists
+- [ ] Handle bullet points and numbered lists in the description
