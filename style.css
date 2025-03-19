@@ -630,3 +630,58 @@ body.dark-mode {
 .dark-mode .export-button:hover {
     background-color: #2e7d32; /* Even darker green on hover in dark mode */
 }
+
+#clearFiltersButton {
+    background-color: #f44336; /* Red */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#clearFiltersButton:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+.dark-mode #clearFiltersButton {
+    background-color: #c62828; /* Darker red for dark mode */
+}
+
+.dark-mode #clearFiltersButton:hover {
+    background-color: #b71c1c; /* Even darker red on hover in dark mode */
+}
+
+@media (prefers-color-scheme: dark) {
+    body:not(.dark-mode) select,
+    body:not(.dark-mode) option,
+    body:not(.dark-mode) #searchInput,
+    body:not(.dark-mode) input {
+        color: #333 !important;
+        background-color: white !important;
+        border-color: #ccc !important;
+    }
+}
+
+/* Fix for Firefox dark mode with light theme dropdowns and search input */
+@-moz-document url-prefix() {
+  .dropdown-item,
+  select,
+  option,
+  #searchInput {
+    color: #333 !important;
+    background-color: white !important;
+    border-color: #ccc !important;
+  }
+
+  body.dark-mode .dropdown-item,
+  body.dark-mode select,
+  body.dark-mode option,
+  body.dark-mode #searchInput {
+    color: #fff !important;
+    background-color: #333 !important;
+    border-color: #555 !important;
+  }
+}

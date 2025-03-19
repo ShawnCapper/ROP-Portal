@@ -35,6 +35,7 @@
 - [ ] Tags for courses based on their descriptions
 - [x] Jump to top button
 - [ ] Snap scrolling to cards
+- [x] Button to clear all filters
 
 # Costly Options
 
@@ -57,3 +58,4 @@
 - [x] Course title is centred on small screens when the title only spans one line 
 - [ ] Handle number lists separated with nested bullet point lists
 - [ ] Handle bullet points and numbered lists in the description
+- [x] In Firefox and Chrome, when browser 'website appearance' setting is set to dark more and portal theme is set to light mode, text in the filter dropdowns is not visible 

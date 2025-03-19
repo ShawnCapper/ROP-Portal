@@ -2038,7 +2038,7 @@
     "Required Documents": ["Resume/CV", "Letter of Intent", "Unofficial University Transcripts"]
   },
   {
-    "Course ID": 4722,
+    "Course ID": 4737,
     "Title": "APLUS for University Students' Communication Skill Development",
     "DPT Code": "OISE",
     "Department": "Ontario Institute for Studies in Education",
@@ -2051,9 +2051,9 @@
     ],
     "Openings per Term": "3 - Summer 2025, 5 - Fall/Winter 2025-26",
     "Posted": "Feb 16, 2025",
-    "Expires": "Mar 16, 2025",
+    "Expires": "Mar 30, 2025",
     "Delivery Method": "Hybrid",
-    "Description": "The primary goal is to examine the impact of APLUS on support for incoming undergraduate U of T students' academic oral and written language development through self-guided and automated feedback support. The integration of APLUS into summer onboarding programs or through embedding APLUS into current curriculums will play a role in incoming students' transition into university studies by supporting student success and academic excellence, all the while facilitating a smoother transition to university life. The APLUS learning-oriented assessment platform was developed for instructors and students to assess and monitor students' academic communication skills using integrative tasks via the ISEF grant in 2020. As the automated machine scoring algorithms have become active after extensive validation based on human scores, the APLUS platform is ready to be widely adopted to significantly impact student support at the University of Toronto. We examine the relationship between oral and written communication ability and the role of self-concepts on students' communication skills. We further investigate valid ways to automate the data processing and scoring process for immediate feedback. We pay close attention to potential biases associated with students' accents and backgrounds in data scoring process using AI.",
+    "Description": "The primary goal is to examine the impact of APLUS on support for incoming undergraduate U of T students' academic oral and written language development through self-guided and automated feedback support. The integration of APLUS into summer onboarding programs or through embedding APLUS into current curriculums will play a role in incoming students' transition into university studies by supporting student success and academic excellence, all the while facilitating a smoother transition to university life. The APLUS learning-oriented assessment platform was developed for instructors and students to assess and monitor students' academic communication skills using integrative tasks via the ISEF grant in 2020. As the automated machine scoring algorithms have become active after extensive validation based on human scores, the APLUS platform is ready to be widely adopted to significantly impact student support at the University of Toronto. We examine the relationship between oral and written communication ability and the role of self-concepts on students' communication skills. We further investigate valid ways to automate the data processing and scoring process for immediate feedback. We pay close attention to potential biases associated with students' accents and backgrounds in data scoring process using AI.\n\nPlease note: the deadline to apply for this ROP course has been extended to March 30, 11:59pm. An application to this course will not be counted towards the maximum of 5 ROP courses. If you've already submitted 5 applications, you can submit an additional application to this course.",
     "AI_Description": "This project examines the impact of the APLUS platform on incoming undergraduate students' academic oral and written language development by using self-guided and automated feedback. It is aimed at facilitating a smoother transition into university life while addressing potential biases in AI scoring.",
     "Student Roles": "Attending team meetings; Completing team tasks (data collection and analysis); Developing a research topic of interest; Presenting research results to the team and external audience.",
     "AI_Student Roles": "Students will participate in team meetings, contribute to data collection and analysis, develop research topics, and present their findings.",
@@ -2228,6 +2228,31 @@
     "Training & Mentorship": "Students will receive comprehensive training and mentorship throughout the research project to ensure a rewarding and supportive learning experience. Key components include:\n\n1. Initial Training\n* Introductory workshops on data management, analysis techniques, and the use of statistical software (e.g., Stata, R, Python).\n* Training on interview techniques, qualitative data transcription, and coding.\n2. Ongoing Supervision\n* Weekly group meetings with the research team to discuss progress, address challenges, and provide feedback.\n* One-on-one mentorship sessions with the supervising professor to guide students in their tasks and professional development.\n3. Collaborative Environment\n* Support from graduate research assistants to help with technical tasks and provide peer mentoring.\n* Training on equity, diversity, and inclusion (EDI) to foster an inclusive and respectful research environment.\nThis mentorship model ensures that students gain both technical and interpersonal skills, preparing them for advanced research and professional opportunities.",
     "AI_Training & Mentorship": "",
     "Selection Criteria": "Students involved in this project should demonstrate strong analytical skills, particularly in quantitative data analysis. Proficiency with statistical and programming tools-such as Python, Stata, R, or similar software-is essential. Students with experience handling large administrative datasets, familiarity with econometric techniques, and interest in fieldwork or qualitative methods will be prioritized.",
+    "AI_Selection Criteria": "",
+    "Required Documents": ["Resume/CV", "Letter of Intent", "Unofficial University Transcripts"]
+  },
+  {
+    "Course ID": 4623,
+    "Title": "Molecular evolution of rhodopsin",
+    "DPT Code": "EEB",
+    "Department": "Ecology and Evolutionary Biology",
+    "Faculty Supervisor(s)": {
+      "S1": ["Belinda Chang", "https://eeb.utoronto.ca/profile/chang-belinda/"]
+    },
+    "Terms": ["Fall/Winter 2025-26 (Y)"],
+    "Openings per Term": 2,
+    "Posted": "Mar 18, 2025",
+    "Expires": "Apr 6, 2025",
+    "Delivery Method": "In Person",
+    "Description": "The objectives of this project are to investigate the molecular basis of visual adaptations. The focus is on genes involved in the evolution of adaptations in key sensory systems such as the visual transduction pathway in photoreceptor cells of the eye. This project will involve both computational and experimental aspects, including the analysis of genomic datasets currently in the lab, as well as from publicly available databases, as well as molecular biology methods, including PCR and cloning methods.\n\nPlease note: the deadline to apply for this ROP course has been extended to April 6, 11:59pm. An application to this course will not be counted towards the maximum of 5 ROP courses. If you've already submitted 5 applications, you can submit an additional application to this course.",
+    "AI_Description": "",
+    "Student Roles": "Students participating in this 299Y project would be involved in one or more avenues of research, depending on time and availability, with opportunities to be exposed to a diverse array of methodologies in the study the evolution of visual transduction genes, which can include:\n1. Bioinformatics. Fundamentals of bioinformatics, including database mining, and comparative sequence analysis, as well as sequence editing, aligning, and primer design.\n2. Computational biology. Basics of comparative sequence analyses such as phylogenetic analyses, and analyses of selective constraint.\n3. Molecular methods. Basics of methodologies in molecular biology. These can include techniques such as gel electrophoresis, PCR, restriction digests, ligations, and miniprepping of plasmid DNA, in addition to fundamental skills such as making and autoclaving solutions and other media.\n4. Lab participation and final report. Students would participate in lab meetings/journal clubs. Students would be expected to attend lab meetings, and present their results to the lab. They are expected to keep detailed notes with respect to dry/wetlab analyses, and to compile their results into a final report.\n5. Participation in ROP poster fair. Students are expected to participate in the ROP poster fair to present their results.",
+    "AI_Student Roles": "",
+    "Academic Outcomes": "Students would gain skills in one or more of the categories listed above, as well as opportunities to interact with other members of the lab in diverse areas of biology and bioinformatics",
+    "AI_Academic Outcomes": "",
+    "Training & Mentorship": "Students would be trained in one or more of the categories listed above as described.",
+    "AI_Training & Mentorship": "",
+    "Selection Criteria": "Students are required to have a bioinformatics/biology major, and a strong interest in molecular evolution. Some bioinformatics experience would be useful.",
     "AI_Selection Criteria": "",
     "Required Documents": ["Resume/CV", "Letter of Intent", "Unofficial University Transcripts"]
   }

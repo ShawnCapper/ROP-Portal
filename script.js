@@ -383,8 +383,12 @@ function formatTextWithLists(text) {
 }
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', loadCourses);
-document.getElementById('expandAllButton').addEventListener('click', toggleAllCards);
+document.addEventListener('DOMContentLoaded', () => {
+    loadCourses();
+
+    document.getElementById('clearFiltersButton').addEventListener('click', clearAllFilters);
+    document.getElementById('expandAllButton').addEventListener('click', toggleAllCards);
+});
 
 // Post initialization functions
 let isExpanded = false;
@@ -521,3 +525,26 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+// Function to clear all filters
+function clearAllFilters() {
+    // Reset search input
+    document.getElementById('searchInput').value = '';
+
+    // Reset dropdowns
+    document.getElementById('departmentFilter').value = '';
+    document.getElementById('termFilter').value = '';
+    document.getElementById('deliveryFilter').value = '';
+
+    // Uncheck checkboxes
+    document.getElementById('activeOnly').checked = false;
+    document.getElementById('shortlistedOnly').checked = false;
+
+    // Re-display courses with cleared filters
+    // This assumes courses is available in this scope
+    // If not, you may need to modify this to work with your data flow
+    fetch('ROP_Courses_2025-26.json')
+        .then(response => response.json())
+        .then(courses => displayCourses(courses))
+        .catch(error => console.error('Error loading courses:', error));
+}
