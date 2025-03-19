@@ -685,3 +685,36 @@ body.dark-mode {
     border-color: #555 !important;
   }
 }
+
+/* Fix text overflow issues */
+.course-card {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.course-title,
+.course-description,
+.course-dates,
+.course-terms-delivery,
+.course-details p,
+.course-details a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+}
+
+/* Special handling for links */
+.course-details a {
+    display: inline-block;
+    max-width: 100%;
+}
+
+/* Handle text in lists */
+.course-description li,
+.course-details li {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+}
