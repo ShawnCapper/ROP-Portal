@@ -17,7 +17,6 @@
 - [x] Expand all button
 - [x] Limit the allowed card size to a natural size
 - [x] Star - add to shortlist (saved in browser)
-- [ ] Comparison tool 
 - [x] Export shortlist into a CSV/excel file
 - [x] Toggle between AI generated summary and full description
 - [x] Show number of results
@@ -30,7 +29,6 @@
 - [ ] Gradient sparkle on course border when hovering the 'magic' button
 - [x] Search box and dark mode switch should be visible while scrolling
 - [ ] Wave the magic wand to AI summarize all cards
-- [ ] User defined font size
 - [ ] Dyslexic friendly fonts
 - [ ] Tags for courses based on their descriptions
 - [x] Jump to top button
@@ -47,7 +45,7 @@
 # Bugs, Not Features
 
 ---
-
+olZa         
 - [x] Update to say showing 1 course instead of courses
 - [x] The card specific button group is lowered when the title spans multiple lines.
 - [x] Limit size of cards to a natural size
@@ -56,6 +54,8 @@
 - [x] Hide expired posts filter hiding courses on day that application is due
 - [x] Search box and dark mode switch are stacked on top of eachother when on small screens
 - [x] Course title is centred on small screens when the title only spans one line 
-- [ ] Handle number lists separated with nested bullet point lists
-- [ ] Handle bullet points and numbered lists in the description
+- [x] Handle number lists separated with nested bullet point lists
+- [x] Handle bullet points and numbered lists in the description
 - [x] In Firefox and Chrome, when browser 'website appearance' setting is set to dark more and portal theme is set to light mode, text in the filter dropdowns is not visible 
+- [x] Divider between the course expanded and collapsed state sections overlaps with exterior border
+- [x] Clearing all filters collapses manually expanded cards

@@ -70,6 +70,7 @@ function toggleShortlist(courseId, button) {
 }
 
 // Function to create course card
+let expandedCardIds = new Set();
 function createCourseCard(course) {
     const template = document.getElementById('courseCardTemplate');
     const card = template.content.cloneNode(true).querySelector('.course-card');
@@ -114,6 +115,7 @@ function createCourseCard(course) {
     const newMagicButton = header.querySelector('.magic-button');
     const newShortlistButton = header.querySelector('.shortlist-button');
     const details = card.querySelector('.course-details');
+    details.dataset.courseId = course['Course ID'];
 
     // Create faculty supervisor links
     const supervisorLinks = Object.entries(course['Faculty Supervisor(s)'])
@@ -153,10 +155,18 @@ function createCourseCard(course) {
         <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
         <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
         <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-        <p><strong>Student Roles:</strong> ${formatTextWithLists(content.studentRoles)}</p>
-        <p><strong>Academic Outcomes:</strong> ${formatTextWithLists(content.academicOutcomes)}</p>
-        <p><strong>Training & Mentorship:</strong> ${formatTextWithLists(content.trainingMentorship)}</p>
-        <p><strong>Selection Criteria:</strong> ${formatTextWithLists(content.selectionCriteria)}</p>
+        
+        <h4>Student roles</h4>
+        <div>${formatTextWithLists(content.studentRoles)}</div>
+        
+        <h4>Academic outcomes</h4>
+        <div>${formatTextWithLists(content.academicOutcomes)}</div>
+        
+        <h4>Training and mentorship</h4>
+        <div>${formatTextWithLists(content.trainingMentorship)}</div>
+        
+        <h4>Selection criteria</h4>
+        <div>${formatTextWithLists(content.selectionCriteria)}</div>
     `;
     }
 
@@ -178,7 +188,17 @@ function createCourseCard(course) {
     // Add event listeners
     header.addEventListener('click', (e) => {
         if (!e.target.closest('.shortlist-button') && !e.target.closest('.magic-button')) {
-            details.style.display = details.style.display === 'none' ? 'block' : 'none';
+            const courseId = course['Course ID'];
+            const expanded = details.style.display === 'none';
+            details.style.display = expanded ? 'block' : 'none';
+            card.dataset.expanded = expanded.toString();
+
+            // Track expanded state by course ID
+            if (expanded) {
+                expandedCardIds.add(courseId);
+            } else {
+                expandedCardIds.delete(courseId);
+            }
         }
     });
 
@@ -194,7 +214,9 @@ function createCourseCard(course) {
     }
 
     // Initialize the details visibility based on current expanded state
-    details.style.display = isExpanded ? 'block' : 'none';
+    const wasManuallyExpanded = expandedCardIds.has(course['Course ID']);
+    details.style.display = (isExpanded || wasManuallyExpanded) ? 'block' : 'none';
+    card.dataset.expanded = (isExpanded || wasManuallyExpanded).toString();
 
     return card;
 }
@@ -327,59 +349,125 @@ function formatTextWithLists(text) {
 
     // Split text into lines
     const lines = text.split('\n');
+    let formattedText = '';
     let inList = false;
     let listType = null; // 'ul' or 'ol'
-    let formattedText = '';
+    let currentNumber = null;
+    let inSubList = false;
+    let currentListItems = [];
 
-    lines.forEach((line, index) => {
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+
         // Check for bullet points (*, -, •)
-        const bulletMatch = line.trim().match(/^(\*|-|•|\+)\s+(.+)$/);
+        const bulletMatch = line.match(/^([*\-•+])\s+(.+)$/);
         // Check for numbered lists (1., 2., etc.)
-        const numberedMatch = line.trim().match(/^(\d+)[.)]\s+(.+)$/);
+        const numberedMatch = line.match(/^(\d+)[.)]\s+(.+)$/);
 
-        if (bulletMatch) {
-            // Start a new unordered list if not already in one
-            if (!inList || listType !== 'ul') {
-                if (inList) formattedText += `</${listType}>`;
-                formattedText += '<ul>';
-                listType = 'ul';
-                inList = true;
+        if (numberedMatch) {
+            const number = numberedMatch[1];
+            const content = numberedMatch[2];
+
+            // If we're in a list and encounter a new number, flush the current list
+            if (inList && listType === 'ol' && number !== currentNumber) {
+                formattedText += buildOrderedList(currentNumber, currentListItems);
+                currentListItems = [];
             }
-            formattedText += `<li>${bulletMatch[2]}</li>`;
-        }
-        else if (numberedMatch) {
+
             // Start a new ordered list if not already in one
             if (!inList || listType !== 'ol') {
                 if (inList) formattedText += `</${listType}>`;
-                formattedText += '<ol>';
-                listType = 'ol';
                 inList = true;
+                listType = 'ol';
             }
-            formattedText += `<li>${numberedMatch[2]}</li>`;
+
+            currentNumber = number;
+            currentListItems.push({
+                type: 'main',
+                content: content,
+                subItems: []
+            });
+            inSubList = false;
+        }
+        else if (bulletMatch) {
+            const content = bulletMatch[2];
+
+            // If we're in an ordered list, treat this as a sub-bullet
+            if (inList && listType === 'ol') {
+                inSubList = true;
+
+                // Add to the last main list item
+                if (currentListItems.length > 0) {
+                    currentListItems[currentListItems.length - 1].subItems.push(content);
+                }
+            } else {
+                // Start a new unordered list if not already in one
+                if (!inList || listType !== 'ul') {
+                    if (inList) formattedText += `</${listType}>`;
+                    formattedText += '<ul>';
+                    listType = 'ul';
+                    inList = true;
+                }
+                formattedText += `<li>${content}</li>`;
+            }
         }
         else {
             // End current list if we encounter a non-list line
             if (inList) {
-                formattedText += `</${listType}>`;
+                if (listType === 'ol') {
+                    formattedText += buildOrderedList(currentNumber, currentListItems);
+                    currentListItems = [];
+                } else {
+                    formattedText += `</${listType}>`;
+                }
                 inList = false;
                 listType = null;
             }
 
             // Only add paragraph if line isn't empty
-            if (line.trim()) {
+            if (line) {
                 formattedText += `${line}<br>`;
             } else {
                 formattedText += '<br>';
             }
         }
-    });
+    }
 
     // Close any open list at the end
     if (inList) {
-        formattedText += `</${listType}>`;
+        if (listType === 'ol') {
+            formattedText += buildOrderedList(currentNumber, currentListItems);
+        } else {
+            formattedText += `</${listType}>`;
+        }
     }
 
     return formattedText;
+}
+
+// Helper function to build an ordered list with possible sub-bullets
+function buildOrderedList(startNumber, items) {
+    if (items.length === 0) return '';
+
+    // Use the start attribute to begin with the correct number
+    let html = `<ol start="${startNumber}">`;
+    items.forEach(item => {
+        html += `<li>${item.content}`;
+
+        // Add sub-bullets if any
+        if (item.subItems.length > 0) {
+            html += '<ul>';
+            item.subItems.forEach(subItem => {
+                html += `<li>${subItem}</li>`;
+            });
+            html += '</ul>';
+        }
+
+        html += '</li>';
+    });
+    html += '</ol>';
+
+    return html;
 }
 
 // Initialize the page
@@ -396,10 +484,24 @@ let isExpanded = false;
 function toggleAllCards() {
     const button = document.getElementById('expandAllButton');
     const allDetails = document.querySelectorAll('.course-details');
+    const allCards = document.querySelectorAll('.course-card');
     isExpanded = !isExpanded;
 
-    allDetails.forEach(details => {
+    allDetails.forEach((details, index) => {
         details.style.display = isExpanded ? 'block' : 'none';
+        const card = allCards[index];
+        card.dataset.expanded = isExpanded.toString();
+
+        // If expanding all, add all course IDs to expanded set
+        // If collapsing all, clear the set
+        const courseId = card.querySelector('.course-details')?.dataset.courseId;
+        if (courseId) {
+            if (isExpanded) {
+                expandedCardIds.add(courseId);
+            } else {
+                expandedCardIds.delete(courseId);
+            }
+        }
     });
 
     button.textContent = isExpanded ? 'Collapse All' : 'Expand All';
