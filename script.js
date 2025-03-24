@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const isDark = !document.body.classList.contains('dark-mode');
         document.body.classList.toggle('dark-mode', isDark);
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+        // Update theme icon
+        const themeIcon = themeToggle.querySelector('.material-symbols-rounded');
+        themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
     });
 });
 
@@ -52,11 +56,11 @@ function updateShortlistCount() {
 function toggleShortlist(courseId, button) {
     if (shortlistedCourses.has(courseId)) {
         shortlistedCourses.delete(courseId);
-        button.querySelector('.shortlist-icon').textContent = '☆';
+        button.querySelector('.shortlist-icon').textContent = 'favorite_border';
         button.closest('.course-card').classList.remove('shortlisted');
     } else {
         shortlistedCourses.add(courseId);
-        button.querySelector('.shortlist-icon').textContent = '★';
+        button.querySelector('.shortlist-icon').textContent = 'favorite';
         button.closest('.course-card').classList.add('shortlisted');
     }
 
@@ -87,17 +91,17 @@ function createCourseCard(course) {
 
     // Create title section
     const titleHTML = `
-        <div class="course-title-row">
-            <div class="course-title">${course.Title}</div>
-            <div class="button-group">
-                <button class="magic-button" aria-label="Magic action">
-                    <span class="magic-icon">✨</span>
-                </button>
-                <button class="shortlist-button" aria-label="Shortlist this course">
-                    <span class="shortlist-icon">☆</span>
-                </button>
-            </div>
+    <div class="course-title-row">
+        <div class="course-title">${course.Title}</div>
+        <div class="button-group">
+            <button class="magic-button" aria-label="Magic action">
+                <span class="material-symbols-rounded">auto_awesome</span>
+            </button>
+            <button class="shortlist-button" aria-label="Shortlist this course">
+                <span class="material-symbols-rounded shortlist-icon">favorite_border</span>
+            </button>
         </div>
+    </div>
     `;
 
     // Set header content
@@ -212,7 +216,7 @@ function createCourseCard(course) {
     // Initialize shortlist state
     if (shortlistedCourses.has(course['Course ID'])) {
         card.classList.add('shortlisted');
-        header.querySelector('.shortlist-icon').textContent = '★';
+        header.querySelector('.shortlist-icon').textContent = 'favorite';
     }
 
     // Initialize the details visibility based on current expanded state
@@ -249,7 +253,9 @@ function formatAssessmentMatrix(assessmentMatrix) {
                 html += `<tr>
                     <td style="padding: 5px; border-bottom: 1px solid #eee;">
                         ${item.learning_activity}
-                        <span class="info-icon" data-description="${escapedDescription}">ℹ️</span>
+                        <span class="info-icon" data-description="${escapedDescription}">
+                            <span class="material-symbols-rounded">info</span>
+                        </span>
                     </td>
                     <td style="padding: 5px; border-bottom: 1px solid #eee;">${item.due_date}</td>
                     <td style="text-align:right; padding: 5px; border-bottom: 1px solid #eee;">${item.weight}%</td>

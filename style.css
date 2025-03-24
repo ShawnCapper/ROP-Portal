@@ -88,12 +88,26 @@
     }
 
     .info-icon:hover::after {
-        left: 0;
-        top: 100%;
-        transform: none;
-        margin-left: 0;
-        margin-top: 5px;
-        max-width: 250px;
+        content: attr(data-description);
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0,0,0,0.65);
+        color: white;
+        border-radius: 8px;
+        padding: 8px 12px;
+        width: max-content;
+        max-width: 300px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 10;
+        font-size: 0.9em;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        margin-left: 10px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255,255,255,0.1);
     }
 
     table th:nth-child(2),
@@ -416,7 +430,7 @@ body.dark-mode {
 .button-group {
     align-self: flex-start;
     display: inline-flex;
-    gap: 0;
+    gap: 8px;
     align-items: center;
 }
 
@@ -442,6 +456,14 @@ body.dark-mode {
     margin: 0;
 }
 
+.magic-button {
+    color: #ccc;
+}
+
+.dark-mode .magic-button {
+    color: #777;
+}
+
 .shortlist-button {
     margin-left: -8px;
 }
@@ -456,7 +478,14 @@ body.dark-mode {
     animation: sparkle 0.3s ease-in-out;
 }
 
-/* Keep your existing sparkle animation */
+.course-card[data-showing-ai="true"] .magic-button {
+    color: #FFD700;
+}
+
+.dark-mode .course-card[data-showing-ai="true"] .magic-button {
+    color: #FFD700;
+}
+
 @keyframes sparkle {
     0% { transform: scale(1); }
     50% { transform: scale(1.3); }
@@ -941,9 +970,9 @@ th {
     left: 100%;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgba(0,0,0,0.75);
     color: white;
-    border-radius: 4px;
+    border-radius: 8px;
     padding: 8px 12px;
     width: max-content;
     max-width: 300px;
@@ -951,13 +980,19 @@ th {
     overflow-y: auto;
     z-index: 10;
     font-size: 0.9em;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     margin-left: 10px;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.12);
 }
 
 .dark-mode .info-icon:hover::after {
-    background-color: rgba(50,50,50,0.9);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+    background-color: rgba(40,40,40,0.8);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
 }
 
 table th:nth-child(2),
@@ -979,4 +1014,52 @@ table th:first-child,
 table td:first-child {
     width: auto;
     min-width: 150px;
+}
+
+/* Material Symbols styling */
+.material-symbols-rounded {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+/* Fill for stars when active */
+.shortlisted .shortlist-icon {
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+
+/* Style for theme toggle */
+#themeToggle .material-symbols-rounded {
+    font-size: 24px;
+}
+
+.dark-mode #themeToggle .material-symbols-rounded {
+    content: 'light_mode';
+}
+
+/* Fix vertical alignment of icons */
+.button-group .material-symbols-rounded,
+.export-button .material-symbols-rounded,
+#backToTopBtn .material-symbols-rounded {
+    vertical-align: middle;
+}
+
+/* Style for info icon */
+.info-icon .material-symbols-rounded {
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+/* Fix for toggle icon rotation */
+.features-toggle[aria-expanded="false"] .toggle-icon {
+    transform: rotate(-90deg);
+    display: inline-block;
 }
