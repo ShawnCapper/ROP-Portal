@@ -24,7 +24,7 @@
 - [ ] Required documents at bottom
 - [x] Compact theme
 - [x] New UI design language \[implemented Material Design 3\] 
-- [ ] Disclaimer: course information is for reference only and is not updated live thus may be out of date (view on clnx.utoronto.ca)
+- [x] Disclaimer: course information is for reference only and is not updated live thus may be out of date (view on clnx.utoronto.ca)
 - [ ] Make site ADA and ODA compliant; AI generated summaries may contain inacuracies
 - [ ] Gradient sparkle on course border when hovering the 'magic' button
 - [x] Search box and dark mode switch should be visible while scrolling
@@ -34,6 +34,7 @@
 - [x] Jump to top button
 - [ ] Snap scrolling to cards
 - [x] Button to clear all filters
+- [x] Site explanation
 
 # Costly Options
 

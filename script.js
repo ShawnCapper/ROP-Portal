@@ -526,6 +526,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Features section toggle
+    const featuresHeader = document.querySelector('.features-header');
+    const featuresToggle = document.querySelector('.features-toggle');
+    const featuresList = document.getElementById('features-list');
+
+    if (featuresHeader && featuresToggle && featuresList) {
+        featuresHeader.addEventListener('click', function() {
+            const isExpanded = featuresToggle.getAttribute('aria-expanded') === 'true';
+            featuresToggle.setAttribute('aria-expanded', !isExpanded);
+
+            if (isExpanded) {
+                featuresList.classList.add('collapsed');
+                featuresList.style.maxHeight = '0';
+            } else {
+                featuresList.classList.remove('collapsed');
+                featuresList.style.maxHeight = featuresList.scrollHeight + 'px';
+            }
+        });
+
+        // Initialize to collapsed state
+        featuresList.classList.add('collapsed');
+        featuresList.style.maxHeight = '0';
+    }
+});
+
 function exportShortlistedCourses() {
     // If no shortlisted courses, show message and return
     if (shortlistedCourses.size === 0) {
@@ -650,3 +676,4 @@ function clearAllFilters() {
         .then(courses => displayCourses(courses))
         .catch(error => console.error('Error loading courses:', error));
 }
+
