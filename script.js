@@ -155,16 +155,18 @@ function createCourseCard(course) {
         <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
         <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
         <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
-        
+
         <h4>Student roles</h4>
         <div>${formatTextWithLists(content.studentRoles)}</div>
-        
+
         <h4>Academic outcomes</h4>
         <div>${formatTextWithLists(content.academicOutcomes)}</div>
-        
+
         <h4>Training and mentorship</h4>
         <div>${formatTextWithLists(content.trainingMentorship)}</div>
-        
+
+        ${formatAssessmentMatrix(course["Assessment Matrix"])}
+
         <h4>Selection criteria</h4>
         <div>${formatTextWithLists(content.selectionCriteria)}</div>
     `;
@@ -219,6 +221,49 @@ function createCourseCard(course) {
     card.dataset.expanded = (isExpanded || wasManuallyExpanded).toString();
 
     return card;
+}
+
+// Function to format assessment matrix data
+function formatAssessmentMatrix(assessmentMatrix) {
+    if (!assessmentMatrix || assessmentMatrix.length === 0) {
+        return '';
+    }
+
+    let html = '<h3>Course Assessment</h3>';
+
+    assessmentMatrix.forEach(session => {
+        html += `<h4>${session.session}</h4>`;
+
+        if (session.assessment_matrix && session.assessment_matrix.length > 0) {
+            html += '<div class="table-responsive">';
+            html += '<table style="width:100%; border-collapse: collapse; margin-bottom: 15px;">';
+            html += '<tr><th style="text-align:left; padding: 5px; border-bottom: 1px solid #ddd;">Learning Activity</th>' +
+                '<th style="text-align:left; padding: 5px; border-bottom: 1px solid #ddd;">Due Date</th>' +
+                '<th style="text-align:right; padding: 5px; border-bottom: 1px solid #ddd;">Weight</th></tr>';
+
+            session.assessment_matrix.forEach(item => {
+                const escapedDescription = item.description
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+
+                html += `<tr>
+                    <td style="padding: 5px; border-bottom: 1px solid #eee;">
+                        ${item.learning_activity}
+                        <span class="info-icon" data-description="${escapedDescription}">ℹ️</span>
+                    </td>
+                    <td style="padding: 5px; border-bottom: 1px solid #eee;">${item.due_date}</td>
+                    <td style="text-align:right; padding: 5px; border-bottom: 1px solid #eee;">${item.weight}%</td>
+                </tr>`;
+            });
+
+            html += '</table>';
+            html += '</div>';
+        } else {
+            html += '<p>No assessment details available for this session.</p>';
+        }
+    });
+
+    return html;
 }
 
 // Function to check if a date is expired or expiring soon (within 3 days) in Toronto time

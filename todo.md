@@ -35,6 +35,7 @@
 - [ ] Snap scrolling to cards
 - [x] Button to clear all filters
 - [x] Site explanation
+- [ ] Course assessment information
 
 # Costly Options
 
