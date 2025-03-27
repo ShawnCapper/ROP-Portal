@@ -70,7 +70,6 @@ function toggleShortlist(courseId, button) {
 
     // Save to localStorage
     localStorage.setItem('shortlistedCourses', JSON.stringify([...shortlistedCourses]));
-    updateShortlistCount();
 }
 
 // Function to create course card
@@ -365,9 +364,6 @@ async function loadCourses() {
 
         // Initial display of courses
         displayCourses(courses);
-
-        // Update shortlist count
-        updateShortlistCount();
 
         // Add event listeners for filters
         document.getElementById('searchInput').addEventListener('input', () => displayCourses(courses));

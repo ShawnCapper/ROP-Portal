@@ -259,7 +259,7 @@
     ],
     "Assessment Matrix": [
       {
-        "session": "2025-26",
+        "session": "Fall-Winter 2025-26",
         "assessment_matrix": [
           {
             "learning_activity": "2-Page Report",
@@ -2824,7 +2824,7 @@
     ],
     "Assessment Matrix": [
       {
-        "session": "2025-26",
+        "session": "Fall-Winter 2025-26",
         "assessment_matrix": [
           {
             "learning_activity": "Lab Participation",
@@ -7377,7 +7377,7 @@
     ],
     "Assessment Matrix": [
       {
-        "session": "2025-26",
+        "session": "Fall-Winter 2025-26",
         "assessment_matrix": [
           {
             "learning_activity": "Read old handwriting and transcribing the text.",
@@ -8083,7 +8083,7 @@
     ],
     "Assessment Matrix": [
       {
-        "session": "2025-26",
+        "session": "Fall-Winter 2025-26",
         "assessment_matrix": [
           {
             "learning_activity": "Literature Review",
@@ -8119,6 +8119,89 @@
             "written_work": true,
             "due_date": "2026-04-01",
             "weight": 15
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "Course ID": 4764,
+    "Title": "Prejudice, stigmatization, motivation, and social invisibility",
+    "DPT Code": "PSY",
+    "Department": "Psychology",
+    "Faculty Supervisor(s)": {
+      "S1": [
+        "Rebecca Neel",
+        "https://www.psych.utoronto.ca/people/directories/all-faculty/rebecca-neel"
+      ]
+    },
+    "Terms": [
+      "Fall/Winter 2025-26 (Y)"
+    ],
+    "Openings per Term": 6,
+    "Posted": "Mar 26, 2025",
+    "Expires": "Apr 20, 2025",
+    "Delivery Method": "Hybrid",
+    "Description": "Stigmatization and prejudice take many forms, from active avoidance or aggression, to inattention and indifference. Using experimental, correlational, and qualitative social psychological methods, we examine how a person's motivations and beliefs (about what ourselves and others are like) shape who they stigmatize, as well as how people experience and manage being stigmatized by others.\n\nWe are focusing on questions like:\n1. What leads a group to be socially invisible - ignored, forgotten, and treated with indifference?\n2. Why are groups sometimes socially invisible and at other times subjected to negative prejudice and active discrimination?\n3. How do people experience and manage being invisible?\n4. Other questions about beliefs, stereotypes, motivation, and intergroup solidarity\n\nPlease note: the deadline to apply for this ROP course is April 20, 11:59pm. As this ROP course is posted on a later date (March 26), an application to this course will not be counted towards the maximum of 5 ROP courses. If you've already submitted 5 applications, you can submit an additional application to this course.",
+    "AI_Description": "",
+    "Student Roles": "Students who work in the lab get hands-on experience in conducting social psychological science. Usually, students will:\n1. Conduct literature searches and read background literature\n2. Help with study material generation, which may include, for example, working with photoshop and face morphing software\n3. Assist with participant recruitment and data collection from human subjects\n4. Help with data entry and data analysis, which will include training on EXCEL, SPSS, and/or R\n5. Write a conference-style poster or paper about the study that they worked on\n5. Attend regular meetings with graduate student supervisors and other lab members",
+    "AI_Student Roles": "",
+    "Academic Outcomes": "Students will gain skills like:\n1. Research skills that can include literature search, stimulus generation, participant recruitment, study piloting, data handling, qualitative data coding, and other tasks\n2. Communicating and coordinating as part of a research team\n3. Communicating research findings to the lab and to broader audiences",
+    "AI_Academic Outcomes": "",
+    "Training & Mentorship": "Students work closely with and receive mentoring from the faculty member and graduate students. Students will meet regularly with their student supervisor and work as part of a research team. The ideal student for this position is motivated, conscientious, interested in learning about prejudice, intergroup relations, beliefs about change, stigmatization, stereotyping, and/or social motivation, and looking to build their research skills.",
+    "AI_Training & Mentorship": "",
+    "Selection Criteria": "We seek students with a) a strong interest in gaining research experience and learning about the research process, b) good fit of their interests with our lab's current research directions, c) strong performance (A range) in at least one course in methods and statistics, d) a strong overall GPA, especially in psychology courses, f) any additional evidence of work ethic, maturity, communication skills, time-management skills, and community involvement (e.g., work or volunteer experience, etc.).",
+    "AI_Selection Criteria": "",
+    "Required Documents": [
+      "Resume/CV",
+      "Letter of Intent",
+      "Unofficial University Transcripts"
+    ],
+    "Assessment Matrix": [
+      {
+        "session": "Fall-Winter 2025-26",
+        "assessment_matrix": [
+          {
+            "learning_activity": "Research-related tasks",
+            "description": "Running research participants and other data-related tasks (e.g., literature reviews, pilot testing studies, developing stimuli, data entry)",
+            "written_work": false,
+            "due_date": "Ongoing",
+            "weight": 35
+          },
+          {
+            "learning_activity": "Participation in regular lab and supervisor meetings",
+            "description": "Contributing to discussions, providing feedback on study design and data, discussing and critiquing articles",
+            "written_work": false,
+            "due_date": "Ongoing",
+            "weight": 10
+          },
+          {
+            "learning_activity": "Interim reflection paper",
+            "description": "An opportunity to provide mid-year feedback on the ROP experience and to reflect on what you have learned so far",
+            "written_work": true,
+            "due_date": "Last day of classes, Fall term",
+            "weight": 10
+          },
+          {
+            "learning_activity": "Research Fair Preparation and Participation",
+            "description": "Students are expected to participate in the Fair to showcase their work on the research project. The instructor will decide how the work will be graded.",
+            "written_work": true,
+            "due_date": "Research faire date (usually March)",
+            "weight": 5
+          },
+          {
+            "learning_activity": "Final scientific poster on the project",
+            "description": "Create a poster to summarize one study and findings of a project to which you have contributed, either solo or with other students (to be determined by faculty advisor)",
+            "written_work": true,
+            "due_date": "A week before ROP faire",
+            "weight": 30
+          },
+          {
+            "learning_activity": "One-page Ethics reflection",
+            "description": "Complete tutorial on Research Ethics and reflection of what ethical research means to them",
+            "written_work": true,
+            "due_date": "2025-10-01",
+            "weight": 10
           }
         ]
       }

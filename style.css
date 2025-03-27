@@ -127,7 +127,7 @@
 /* Overall Page Styling */
 body {
     margin: 100px 20px 20px 20px;
-    font-family: -apple-system, BlinkMacSystemFont, \`Segoe UI\`, Roboto, Helvetica, Arial, sans-serif, \`Apple Color Emoji\`, \`Segoe UI Emoji\`, \`Segoe UI Symbol\`;
+    font-family: 'IBM Plex Sans', -apple-system, 'Segoe UI', sans-serif;
     background-color: #f4f4f4;
     color: #333;
     transition: background-color 0.3s, color 0.3s;
