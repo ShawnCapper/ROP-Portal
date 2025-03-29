@@ -118,7 +118,7 @@ function createCourseCard(course) {
     const newMagicButton = header.querySelector('.magic-button');
     const newShortlistButton = header.querySelector('.shortlist-button');
     const details = card.querySelector('.course-details');
-    details.dataset.courseId = course['Course ID'];
+    details.dataset.courseId = course['Posting ID'];
 
     // Create faculty supervisor links
     const supervisorLinks = Object.entries(course['Faculty Supervisor(s)'])
@@ -154,7 +154,7 @@ function createCourseCard(course) {
 
         // Update details section
         details.innerHTML = `
-        <p><strong>Posting ID:</strong> ${course['Course ID']}</p>
+        <p><strong>Posting ID:</strong> ${course['Posting ID']}</p>
         <p><strong>Department:</strong> ${course.Department}${course['DPT Code'] ? ` (${course['DPT Code']})` : ''}</p>
         <p><strong>Openings per Term:</strong> ${course['Openings per Term']}</p>
         <p><strong>Faculty Supervisor${Object.keys(course['Faculty Supervisor(s)']).length > 1 ? 's' : ''}:</strong> ${supervisorLinks}</p>
@@ -193,12 +193,12 @@ function createCourseCard(course) {
     // Add event listeners
     header.addEventListener('click', (e) => {
         if (!e.target.closest('.shortlist-button') && !e.target.closest('.magic-button')) {
-            const courseId = course['Course ID'];
+            const courseId = course['Posting ID'];
             const expanded = details.style.display === 'none';
             details.style.display = expanded ? 'block' : 'none';
             card.dataset.expanded = expanded.toString();
 
-            // Track expanded state by course ID
+            // Track expanded state by posting ID
             if (expanded) {
                 expandedCardIds.add(courseId);
             } else {
@@ -209,17 +209,17 @@ function createCourseCard(course) {
 
     newShortlistButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        toggleShortlist(course['Course ID'], newShortlistButton);
+        toggleShortlist(course['Posting ID'], newShortlistButton);
     });
 
     // Initialize shortlist state
-    if (shortlistedCourses.has(course['Course ID'])) {
+    if (shortlistedCourses.has(course['Posting ID'])) {
         card.classList.add('shortlisted');
         header.querySelector('.shortlist-icon').textContent = 'favorite';
     }
 
     // Initialize the details visibility based on current expanded state
-    const wasManuallyExpanded = expandedCardIds.has(course['Course ID']);
+    const wasManuallyExpanded = expandedCardIds.has(course['Posting ID']);
     details.style.display = (isExpanded || wasManuallyExpanded) ? 'block' : 'none';
     card.dataset.expanded = (isExpanded || wasManuallyExpanded).toString();
 
@@ -232,10 +232,16 @@ function formatAssessmentMatrix(assessmentMatrix) {
         return '';
     }
 
-    let html = '<h3>Course Assessment</h3>';
+    let html = '<h4>Course assessment</h4>';
 
     assessmentMatrix.forEach(session => {
-        html += `<h4>${session.session}</h4>`;
+        html += `<div class="assessment-section">
+            <div class="assessment-header">
+                <h5>${session.session}</h5>
+                <button class="expand-table-button" aria-label="Expand assessment table">
+                    <span class="material-symbols-rounded">fullscreen</span>
+                </button>
+            </div>`;
 
         if (session.assessment_matrix && session.assessment_matrix.length > 0) {
             html += '<div class="table-responsive">';
@@ -244,12 +250,15 @@ function formatAssessmentMatrix(assessmentMatrix) {
                 '<th style="text-align:left; padding: 5px; border-bottom: 1px solid #ddd;">Due Date</th>' +
                 '<th style="text-align:right; padding: 5px; border-bottom: 1px solid #ddd;">Weight</th></tr>';
 
-            session.assessment_matrix.forEach(item => {
+            session.assessment_matrix.forEach((item, index) => {
                 const escapedDescription = item.description
                     .replace(/"/g, '&quot;')
                     .replace(/'/g, '&#39;');
 
-                html += `<tr>
+                // Add row-even or row-odd class based on index
+                const rowClass = index % 2 === 0 ? 'row-even' : 'row-odd';
+
+                html += `<tr class="${rowClass}">
                     <td style="padding: 5px; border-bottom: 1px solid #eee;">
                         ${item.learning_activity}
                         <span class="info-icon" data-description="${escapedDescription}">
@@ -266,6 +275,8 @@ function formatAssessmentMatrix(assessmentMatrix) {
         } else {
             html += '<p>No assessment details available for this session.</p>';
         }
+
+        html += '</div>'; // Close assessment-section
     });
 
     return html;
@@ -337,7 +348,7 @@ function filterCourses(courses) {
 
     return courses.filter(course => {
         const matchesSearch = (
-            course['Course ID'].toString().includes(searchTerm) ||
+            course['Posting ID'].toString().includes(searchTerm) ||
             course.Title.toLowerCase().includes(searchTerm) ||
             course.Description.toLowerCase().includes(searchTerm)
         );
@@ -346,7 +357,7 @@ function filterCourses(courses) {
         const matchesTerm = !selectedTerm || course.Terms.includes(selectedTerm);
         const matchesDelivery = !selectedDelivery || course['Delivery Method'] === selectedDelivery;
         const matchesActive = !hideExpired || !checkExpiryStatus(course.Expires).isExpired;
-        const matchesShortlist = !showShortlistedOnly || shortlistedCourses.has(course['Course ID']);
+        const matchesShortlist = !showShortlistedOnly || shortlistedCourses.has(course['Posting ID']);
 
         return matchesSearch && matchesDepartment && matchesTerm &&
             matchesDelivery && matchesActive && matchesShortlist;
@@ -539,7 +550,7 @@ function toggleAllCards() {
         const card = allCards[index];
         card.dataset.expanded = isExpanded.toString();
 
-        // If expanding all, add all course IDs to expanded set
+        // If expanding all, add all posting IDs to expanded set
         // If collapsing all, clear the set
         const courseId = card.querySelector('.course-details')?.dataset.courseId;
         if (courseId) {
@@ -612,7 +623,7 @@ function exportShortlistedCourses() {
         .then(courses => {
             // Filter only shortlisted courses
             const shortlistedData = courses.filter(course =>
-                shortlistedCourses.has(course['Course ID']));
+                shortlistedCourses.has(course['Posting ID']));
 
             if (shortlistedData.length === 0) {
                 alert('No shortlisted courses found.');
@@ -724,3 +735,294 @@ function clearAllFilters() {
         .catch(error => console.error('Error loading courses:', error));
 }
 
+// Table expand functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('tableModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalTableContainer = document.getElementById('modalTableContainer');
+    const closeModal = document.getElementById('closeModal');
+
+    // Close modal when clicking the close button
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close modal when clicking outside the modal content
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Handle escape key to close modal
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape' && modal.style.display === 'block') {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Check if table is scrollable when modal is shown
+    function checkTableScroll() {
+        if (!modalTableContainer) return;
+
+        const isScrollable = modalTableContainer.scrollWidth > modalTableContainer.clientWidth;
+        modalTableContainer.classList.toggle('scrollable', isScrollable);
+    }
+
+    // Add resize observer to check scrollability when table size changes
+    if (modalTableContainer && window.ResizeObserver) {
+        const resizeObserver = new ResizeObserver(checkTableScroll);
+        resizeObserver.observe(modalTableContainer);
+    }
+
+    // Check scrollability when modal content changes
+    const observer = new MutationObserver(checkTableScroll);
+    if (modalTableContainer) {
+        observer.observe(modalTableContainer, { childList: true });
+    }
+
+    // Delegate event listener for expand buttons
+    document.body.addEventListener('click', function(e) {
+        if (e.target.closest('.expand-table-button')) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            // Find the assessment section this button belongs to
+            const assessmentSection = e.target.closest('.assessment-section');
+            if (!assessmentSection) return;
+
+            // Get the table and session title
+            const table = assessmentSection.querySelector('table');
+            const title = assessmentSection.querySelector('h5').textContent;
+
+            if (table) {
+                // Update modal content
+                modalTitle.textContent = `Assessment Matrix: ${title}`;
+                modalTableContainer.innerHTML = '';
+
+                // Clone the table and add it to the modal
+                const tableCopy = table.cloneNode(true);
+
+                // Add alternating row colors to the table
+                const rows = tableCopy.querySelectorAll('tbody tr');
+                rows.forEach((row, index) => {
+                    // Clear any existing row classes
+                    row.classList.remove('row-even', 'row-odd');
+
+                    // Add appropriate class based on index
+                    if (index % 2 === 0) {
+                        row.classList.add('row-even');
+                    } else {
+                        row.classList.add('row-odd');
+                    }
+                });
+
+                modalTableContainer.appendChild(tableCopy);
+
+                // Show the modal
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+
+                // Check scrollability after modal is shown
+                setTimeout(checkTableScroll, 100);
+            }
+        }
+    });
+});
+
+// Function to set up ultrawide layout for screens 1600px or wider
+let ultrawideActive = false;
+function setupUltrawideLayout() {
+    if (window.innerWidth < 1600 || ultrawideActive) return;
+
+    // Create the containers
+    const leftPanel = document.createElement('div');
+    leftPanel.className = 'ultrawide-left-panel';
+
+    const rightPanel = document.createElement('div');
+    rightPanel.className = 'ultrawide-right-panel';
+
+    // Add containers to body
+    document.body.classList.add('ultrawide');
+    document.body.appendChild(leftPanel);
+    document.body.appendChild(rightPanel);
+
+    // Move elements to left panel
+    leftPanel.appendChild(document.querySelector('.header-container'));
+    leftPanel.appendChild(document.querySelector('.info-section'));
+    leftPanel.appendChild(document.querySelector('.filters'));
+    leftPanel.appendChild(document.querySelector('.controls-container'));
+
+    // Move course list to right panel
+    rightPanel.appendChild(document.getElementById('courseList'));
+
+    // Update back to top button to scroll right panel
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) {
+        backToTopBtn.onclick = function() {
+            rightPanel.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+    }
+
+    ultrawideActive = true;
+}
+
+function revertUltrawideLayout() {
+    if (window.innerWidth >= 1600 || !ultrawideActive) return;
+
+    const leftPanel = document.querySelector('.ultrawide-left-panel');
+    const rightPanel = document.querySelector('.ultrawide-right-panel');
+
+    if (!leftPanel || !rightPanel) return;
+
+    // Get the main container to move elements back
+    const mainContainer = document.body;
+
+    // Move header back to original position (top of body)
+    const header = leftPanel.querySelector('.header-container');
+    if (header) mainContainer.insertBefore(header, mainContainer.firstChild);
+
+    // Move other elements back
+    const infoSection = leftPanel.querySelector('.info-section');
+    const filters = leftPanel.querySelector('.filters');
+    const controls = leftPanel.querySelector('.controls-container');
+    const courseList = rightPanel.querySelector('#courseList');
+
+    if (header && infoSection) mainContainer.insertBefore(infoSection, header.nextSibling);
+    if (infoSection && filters) mainContainer.insertBefore(filters, infoSection.nextSibling);
+    if (filters && controls) mainContainer.insertBefore(controls, filters.nextSibling);
+    if (controls && courseList) mainContainer.insertBefore(courseList, controls.nextSibling);
+
+    // Restore back to top button functionality
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    if (backToTopBtn) {
+        backToTopBtn.onclick = function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        };
+    }
+
+    // Remove panels and ultrawide class
+    if (leftPanel) leftPanel.remove();
+    if (rightPanel) rightPanel.remove();
+    document.body.classList.remove('ultrawide');
+
+    ultrawideActive = false;
+}
+
+function handleResize() {
+    if (window.innerWidth >= 1600) {
+        setupUltrawideLayout();
+    } else {
+        revertUltrawideLayout();
+    }
+}
+
+// Add CSS for ultrawide layout
+const ultrawideStyles = document.createElement('style');
+ultrawideStyles.textContent = `
+  /* Ultrawide layout (1600px+) */
+  body.ultrawide {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+  }
+
+  .ultrawide-left-panel {
+    width: 380px;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    border-right: 1px solid #ddd;
+    flex-shrink: 0;
+  }
+
+  .dark-mode .ultrawide-left-panel {
+    background-color: #1c1c1e;
+    border-right-color: #444;
+  }
+
+  .ultrawide-right-panel {
+    flex: 1;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  /* Adjustments for left panel elements */
+  body.ultrawide .header-container {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: auto;
+    padding: 0 0 15px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  body.ultrawide .dark-mode .header-container {
+    border-bottom-color: #444;
+  }
+
+  body.ultrawide .info-section {
+    margin: 0 0 20px 0;
+    padding: 0;
+    background-color: transparent;
+    box-shadow: none;
+    max-width: 100%;
+  }
+
+  body.ultrawide .filters {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0 0 20px 0;
+    max-width: 100%;
+  }
+
+  body.ultrawide .filter-group {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  body.ultrawide .filter-group select {
+    width: 100%;
+  }
+
+  body.ultrawide .controls-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    margin: 0 0 20px 0;
+    max-width: 100%;
+  }
+`;
+
+document.head.appendChild(ultrawideStyles);
+
+// Run once when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Set initial layout
+    setTimeout(() => {
+        handleResize();
+
+        // Add resize listener
+        window.addEventListener('resize', handleResize);
+    }, 100);
+});

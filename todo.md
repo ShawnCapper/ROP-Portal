@@ -37,6 +37,8 @@
 - [x] Site explanation
 - [x] Course assessment information
 - [x] More consistent icons
+- [ ] Export as a PDF
+- [ ] Enhanced ultrawide layout
 
 # Costly Options
 
@@ -62,3 +64,4 @@ olZa
 - [x] In Firefox and Chrome, when browser 'website appearance' setting is set to dark more and portal theme is set to light mode, text in the filter dropdowns is not visible 
 - [x] Divider between the course expanded and collapsed state sections overlaps with exterior border
 - [x] Clearing all filters collapses manually expanded cards
+- [ ] Course matrix not exporting correctly
